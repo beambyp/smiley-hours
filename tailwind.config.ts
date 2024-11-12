@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { akshar, montserrat } from "./app/layout";
 
 const config: Config = {
   content: [
@@ -12,6 +13,11 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        montserrat: 'var(--font-montserrat)',
+        akshar: 'var(--font-akshar),',
+        anuphan: 'var(--font-anuphan),'
+      }
     },
   },
   plugins: [],

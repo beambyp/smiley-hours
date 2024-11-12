@@ -4,3 +4,13 @@ export type UserAccount = {
     role: string;
     isapprove: boolean;
   };
+
+  export type UserSignup = {
+    name : string,
+    surname : string,
+    dateOfBirth : Date,
+    gender : string,
+    phoneNumber : string,
+    email: string,
+    password : string,
+  }

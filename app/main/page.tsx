@@ -1,4 +1,4 @@
-import Login from "../libs/data"; 
+import { Login } from "../libs/data"; 
 import { UserAccount } from "../libs/definitions"; 
 
 export default async function Page() {

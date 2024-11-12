@@ -1,0 +1,31 @@
+"use client"
+
+import Image from "next/image";
+import { montserrat } from "../fonts/fonts";
+import UserForm from "../ui/signup/userform";
+import { Client } from "@neondatabase/serverless";
+import { useState } from "react";
+
+export default function Page() {
+
+    return (
+        <div className="bg-gray-100">
+            <div className="bg-white flex w-screen h-screen">
+                <div className="md:w-1/2 w-full h-full relative">
+                    <div className="text-center">
+                        <Image
+                        src="/login/login.png"
+                        width={1000}
+                        height={760}
+                        className=""
+                        alt=""
+                        />
+                    </div>
+                </div>
+                <div className="md:w-1/2 w-full p-16 md:p-8 grid grid-col content-center">
+                    <UserForm/>
+                </div>
+            </div>
+        </div>
+    );
+};
