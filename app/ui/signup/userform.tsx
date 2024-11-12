@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef,useState } from "react";
 
 export default function UserForm(){
     const [name,setName] = useState("")
@@ -11,7 +11,7 @@ export default function UserForm(){
     const [confirmPassword,setConfirmPassword] = useState("")
     const [error,setError] = useState("")
     
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if(confirmPassword != password){
@@ -33,7 +33,7 @@ export default function UserForm(){
           })
           if(res.ok){
             setError("")
-            e.target.reset(); // Reset form
+            //e.target.reset(); // Reset form
           }
         } catch (error) {
           setError("Password and Confirm Password do not match.")
