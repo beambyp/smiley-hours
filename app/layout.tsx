@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 // import localFont from "next/font/local";
-import { Anuphan, Montserrat, Akshar } from "next/font/google";
+// import { Anuphan, Montserrat, Akshar } from "next/font/google";
+import { montserrat, akshar, anuphan } from "./fonts/fonts";
 import "./globals.css";
 
 // const geistSans = localFont({
@@ -14,23 +15,23 @@ import "./globals.css";
 //   weight: "100 900",
 // });
 
-export const montserrat = Montserrat({
-  weight: ['500', '700'],
-  subsets: ['latin'],
-  variable: "--font-montserrat",
-});
+// const montserrat = Montserrat({
+//   weight: ['500', '700'],
+//   subsets: ['latin'],
+//   variable: "--font-montserrat",
+// });
 
-export const akshar = Akshar({
-  weight: ['500', '700'],
-  subsets: ['latin'],
-  variable: "--font-akshar",
-});
+// const akshar = Akshar({
+//   weight: ['500', '700'],
+//   subsets: ['latin'],
+//   variable: "--font-akshar",
+// });
 
-export const anuphan = Anuphan({
-  weight: ['500', '700'],
-  subsets: ['thai'],
-  variable: "--font-anuphan",
-})
+// const anuphan = Anuphan({
+//   weight: ['500', '700'],
+//   subsets: ['thai'],
+//   variable: "--font-anuphan",
+// })
 
 export const metadata: Metadata = {
   title: "Smiley Hours App",
