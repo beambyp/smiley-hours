@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import { akshar, montserrat } from "./app/layout";
 
 const config: Config = {
   content: [

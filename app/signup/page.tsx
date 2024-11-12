@@ -1,10 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { montserrat } from "../fonts/fonts";
 import UserForm from "../ui/signup/userform";
-import { Client } from "@neondatabase/serverless";
-import { useState } from "react";
 
 export default function Page() {
 

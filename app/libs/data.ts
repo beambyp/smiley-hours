@@ -1,7 +1,6 @@
 import { Pool } from '@neondatabase/serverless'
 import {
     UserAccount,
-    UserSignup,
 } from './definitions';
 
 const pool = new Pool({
