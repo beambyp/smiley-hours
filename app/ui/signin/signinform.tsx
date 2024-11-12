@@ -7,6 +7,8 @@ export default function SignInForm(){
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
     }
+    console.log(email)
+    console.log(password)
     return(
         <div>
             <h2 className= "font-akshar text-2xl md:text-3xl text-blue-800 mb-4 md:mb-6 ">Sign In</h2>

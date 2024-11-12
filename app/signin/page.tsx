@@ -1,9 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { montserrat } from "../fonts/fonts";
 import LoginForm from "../ui/signin/signinform"
-import { Client } from "@neondatabase/serverless";
 
 export default function Page() {
     return (

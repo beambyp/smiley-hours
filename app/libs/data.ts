@@ -34,7 +34,7 @@ export async function UserSignupFunction({ email, name, surname, gender, dateofb
 
     try {
       const res = await pool.query(insert_useracccount, values);
-      const res1 = await pool.query(insert_userinfo, values1);
+      await pool.query(insert_userinfo, values1);
       return res.rows[0];
     } catch (error) {
       console.error("Error saving user to database:", error);
