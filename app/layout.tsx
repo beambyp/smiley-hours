@@ -16,6 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Material Symbols */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body
         className={`${montserrat.variable} ${akshar.variable} ${anuphan.variable} antialiased`}
       >
