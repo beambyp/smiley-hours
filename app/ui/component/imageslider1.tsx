@@ -14,11 +14,11 @@ const photos = [
 
 export default function PhotoSlider() {
   const [current, setCurrent] = useState(0);
-  const delay = 6000; 
+  const delay = 6000; {/* delay time*/}
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % photos.length); 
+      setCurrent((prev) => (prev + 1) % photos.length); //loop next photo
     }, delay);
 
     return () => clearInterval(interval); 
@@ -28,7 +28,7 @@ export default function PhotoSlider() {
     <div className="relative w-full h-[450px] overflow-hidden">
       {/* photo */}
         <div
-            className="flex transition-transform duration-1000"
+            className="flex transition-transform duration-1000" // smooth slider 
             style={{
                 transform: `translateX(-${current * 100}%)`, 
             }}
@@ -38,7 +38,7 @@ export default function PhotoSlider() {
             key={index}
             src={photo}
             alt={`Slide ${index + 1}`}
-            className="w-full h-full flex-shrink-0" 
+            className="w-full h-full flex-shrink-0" //fit photo 
           />
         ))}
     </div>
