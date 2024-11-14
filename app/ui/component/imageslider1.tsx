@@ -14,7 +14,7 @@ const photos = [
 
 export default function PhotoSlider() {
   const [current, setCurrent] = useState(0);
-  const delay = 5000; 
+  const delay = 6000; 
 
   useEffect(() => {
     const interval = setInterval(() => {
