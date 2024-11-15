@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from 'bcrypt'
 const prisma = new PrismaClient()
 
 export async function POST(request: Request){
@@ -20,7 +19,7 @@ export async function POST(request: Request){
             isApprove,
         }
     })
-    const userAccount = await prisma.userInfo.create({
+    await prisma.userInfo.create({
         data:{
             email,
             name,
