@@ -5,16 +5,15 @@ import SignInForm from "../ui/signin/signinform"
 
 export default function Page() {
     return (
-        <div className="bg-gray-100">
-            <div className="bg-white flex w-screen h-screen">
-                <div className="md:w-1/2 w-full h-full relative">
+        <div className="bg-white flex w-screen h-screen">
+                <div className="md:w-1/2 w-screen relative">
                     <div className="text-center">
                         <Image
                         src="/signin/login.png"
-                        width={1000}
-                        height={760}
-                        className=""
-                        alt=""
+                        alt="Login Background"
+                        fill={true}
+                        className="object-cover"
+                        priority
                         />
                     </div>
                 </div>
@@ -22,6 +21,5 @@ export default function Page() {
                     <SignInForm/>
                 </div>
             </div>
-        </div>
     );
 };
