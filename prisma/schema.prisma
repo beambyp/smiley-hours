@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserAccount{
+  email String @unique
+  password String 
+  Role String
+  isApprove Boolean
+}
+
+model UserInfo{
+  email String @unique
+  name String
+  surname String
+  gender String
+  dateOfBirth String
+  phoneNumber String
+}
+
+model PsychologistInfo{
+  email String @unique
+  citizenID String
+  name String
+  surname String
+  phoneNumber String
+  licenseNumber String
+  psychologistPhoto String?
+  gender String
+  dateOfBirth String
+  address String
+  workplace String
+  specialization String
+  isSpecializeAdult Boolean
+  isSpecializeChildAndTeen Boolean
+  isSpecializeElder Boolean
+}
