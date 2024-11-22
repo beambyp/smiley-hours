@@ -1,24 +1,14 @@
-import { Login } from "../libs/data"; 
-import { UserAccount } from "../libs/definitions"; 
+"use client"
+import { useSession } from "next-auth/react";
 
-export default async function Page() {
-    const users: UserAccount[] = await Login();
+export default function Page() {
+    const {data: session,status} = useSession();
+    console.log(session)
+    console.log(status)
     return (
-        <div>
-            <h1>User Accounts</h1>
-            {users.length > 0 ? (
-                <ul>
-                    {users.map((user, index) => (
-                        <li key={index}>
-                            <h2>Email: {user.email}</h2>
-                            <p>Role: {user.role}</p>
-                            <p>Is Approved: {user.isapprove ? 'Yes' : 'No'}</p>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No users found.</p> 
-            )}
-        </div>
+        status == "authenticated" && session.user &&
+        (<div>
+            <p>Welcome, {session.user.email}</p>
+        </div>)
     );
 }

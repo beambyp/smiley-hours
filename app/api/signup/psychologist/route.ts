@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
     try {
-        const { name, surname, dateOfBirth, gender, phoneNumber, email, password } = await request.json();
-        const Role = "User";
-        const isApprove = true;
+        const {name,surname,dateOfBirth,gender,phoneNumber,citizenID,licenseNumber,address,workplace,specialization,isSpecializeAdult,isSpecializeChildAndTeen,isSpecializeElder,email,password } = await request.json();
+        const Role = "Psychologist";
+        const isApprove = false; //Approve Manual by Admin
 
         // Check if the email already exists
         const existingUser = await prisma.userAccount.findUnique({
@@ -25,14 +25,22 @@ export async function POST(request: Request) {
                 isApprove,
             },
         });
-        await prisma.userInfo.create({
+        await prisma.psychologistInfo.create({
             data: {
                 email,
+                citizenID,
                 name,
                 surname,
+                phoneNumber,
                 gender,
                 dateOfBirth,
-                phoneNumber,
+                address,
+                workplace,
+                specialization,
+                isSpecializeAdult,
+                isSpecializeChildAndTeen,
+                isSpecializeElder,
+                licenseNumber,
             },
         });
         return new Response(JSON.stringify(newAccount), { status: 201 });

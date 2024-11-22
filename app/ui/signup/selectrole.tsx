@@ -15,8 +15,7 @@ export default function SelectRole({ onSelect }: SelectRoleProps) {
     const handleNext = () => {
         if (selectedRole) {
             console.log(`Selected Role: ${selectedRole}`);
-            onSelect(selectedRole);
-            // Proceed with the next steps, e.g., navigate to the signup form
+            onSelect(selectedRole);  
         } else {
             alert("Please select a role.");
         }
@@ -24,7 +23,7 @@ export default function SelectRole({ onSelect }: SelectRoleProps) {
     return (
         <div>
             <div className="flex flex-col items-center">
-            <h2 className="text-4xl font-akshar font-bold text-blue-700 mb-6">Select Your Role</h2>
+            <h2 className="text-4xl font-akshar font-bold text-[#2B6EB0] mb-6">Select Your Role</h2>
             
             <div className="flex gap-8 mb-6">
                 {/* Patient Role Card */}
@@ -34,13 +33,13 @@ export default function SelectRole({ onSelect }: SelectRoleProps) {
                     onClick={() => handleRoleSelect('patient')}
                 >
                     <Image
-                        src="/login/login.png"
+                        src="/signup/usericon.png"
                         width={1000}
                         height={760}
                         className=""
                         alt=""
                     />
-                    <p className="font-anuphan text-lg text-gray-800 mt-4">ผู้ต้องการคำปรึกษา</p>
+                    <p className="font-anuphan text-lg text-[#2B6EB0] mt-4">ผู้ต้องการคำปรึกษา</p>
                 </div>
                 
                 {/* Doctor Role Card */}
@@ -50,18 +49,18 @@ export default function SelectRole({ onSelect }: SelectRoleProps) {
                     onClick={() => handleRoleSelect('doctor')}
                 >
                     <Image
-                        src="/login/login.png"
+                        src="/signup/psychologisticon.png"
                         width={1000}
                         height={760}
                         className=""
                         alt=""
                     />
-                    <p className="font-anuphan text-lg text-gray-800 mt-4">ผู้ให้คำปรึกษา</p>
+                    <p className="font-anuphan text-lg text-[#2B6EB0] mt-4">ผู้ให้คำปรึกษา</p>
                 </div>
             </div>
 
             <button 
-                className="font-akshar bg-blue-600 text-white py-2 px-8 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors"
+                className="font-akshar bg-[#2B6EB0] text-white py-2 px-8 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors"
                 onClick={handleNext}>
                 Next
             </button>

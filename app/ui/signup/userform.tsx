@@ -37,6 +37,9 @@ export default function UserForm(){
           if(res.ok){
             router.push('/signin')
           }
+          else{
+            setError("Error registeration")
+          }
         } catch (error) {
           setError("Password and Confirm Password do not match.")
           console.log(error)
@@ -45,12 +48,12 @@ export default function UserForm(){
 
     return(
         <div>
-            <h2 className= "font-akshar text-2xl md:text-3xl text-blue-800 mb-4 md:mb-6 ">Create Account</h2>
-            <p className="font-anuphan text-sm text-gray-500 mb-6">ผู้ต้องการคำปรึกษา</p>
+            <h2 className= "font-akshar text-2xl md:text-3xl text-[#2B6EB0] mb-2 md:mb-6 ">Create Account</h2>
+            <p className="font-anuphan text-xl text-[#2B6EB0] mb-6">ผู้ต้องการคำปรึกษา</p>
             <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-[#2B6EB0]">
                 ชื่อ <span className="font-anuphan text-red-500">*</span>
               </label>
               <input
@@ -62,7 +65,7 @@ export default function UserForm(){
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-[#2B6EB0]">
                 นามสกุล <span className="font-anuphan text-red-500">*</span>
               </label>
               <input
@@ -74,7 +77,7 @@ export default function UserForm(){
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-[#2B6EB0]">
                 วันเกิด <span className="font-anuphan text-red-500">*</span>
               </label>
               <input
@@ -85,7 +88,7 @@ export default function UserForm(){
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-[#2B6EB0]">
                 เพศ <span className="font-anuphan text-red-500">*</span>
               </label>
               <input
@@ -97,7 +100,7 @@ export default function UserForm(){
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-[#2B6EB0]">
                 เบอร์โทร <span className="font-anuphan text-red-500">*</span>
               </label>
               <input
@@ -109,7 +112,7 @@ export default function UserForm(){
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-[#2B6EB0]">
                 Email <span className="text-red-500">*</span>
               </label>
               <input
@@ -121,7 +124,7 @@ export default function UserForm(){
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-[#2B6EB0]">
                 รหัสผ่าน <span className="font-anuphan text-red-500">*</span>
               </label>
               <input
@@ -133,7 +136,7 @@ export default function UserForm(){
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-[#2B6EB0]">
                 ยืนยันรหัสผ่าน <span className="font-anuphan text-red-500">*</span>
               </label>
               <input
@@ -147,11 +150,12 @@ export default function UserForm(){
           </div>
           <button
             type="submit"
-            className="font-akshar mt-4 w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition"
+            className="font-akshar mt-4 w-full bg-[#2B6EB0] text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition"
           >
             Sign Up
           </button>
         </form>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 }

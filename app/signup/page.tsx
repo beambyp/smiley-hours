@@ -14,20 +14,20 @@ export default function Page() {
     };
 
     return (
-        <div className="bg-gray-100">
-            <div className="bg-white flex w-screen h-screen">
-                <div className="md:w-1/2 w-full h-full relative">
+        <div className="bg-white flex w-screen h-screen">
+                <div className="md:w-1/2 w-screen relative">
                     <div className="text-center">
                         <Image
-                        src="/login/login.png"
-                        width={1000}
-                        height={760}
-                        className=""
-                        alt=""
+                        src="/signin/login.png"
+                        alt="Login Background"
+                        fill={true}
+                        className="object-cover"
+                        priority
                         />
                     </div>
                 </div>
-                <div className="md:w-1/2 w-full p-16 md:p-8 grid grid-col content-center">
+                <div className="md:w-1/2 w-screen p-16 md:p-8 grid grid-col content-around">
+                    <div className="max-h-screen">
                     {!selectedRole ? (
                     <SelectRole onSelect={handleRoleSelect} />
                     ) : selectedRole === 'patient' ? (
@@ -35,8 +35,8 @@ export default function Page() {
                     ) : (
                         <PsychologistForm />
                     )}
+                    </div>
                 </div>
-            </div>
         </div>
     );
 };
