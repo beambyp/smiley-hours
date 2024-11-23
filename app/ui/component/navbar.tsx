@@ -2,12 +2,23 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Header() {
+{/* Menu Item */}
+interface MenuItem {
+  href: string;
+  label: string;
+}
+
+{/* Prob */}
+interface NavbarProps {
+  menuItems: MenuItem[];
+}
+
+const Navbar: React.FC<NavbarProps> = ({ menuItems }) => {
   return (
-    <div className="bg-header py-1">
+    <div className="bg-header py-1 shadow-2xl shadow-gray-500/50">
       <div className="container mx-auto flex justify-between items-center px-4">
-        {/* Logo */}
-        <div className="flex items-start space-x-4">
+        {/* Logo Section */}
+        <div className="flex items-start space-x-4 px-6">
           <Image src="/logo/logo.png" alt="Logo" width={110} height={80} />
           <div className="flex flex-col py-4">
             <Image
@@ -22,22 +33,17 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Navigation */}
-        <div className="flex justify-center items-center space-x-32 font-anuphan text-navfont text-2xl pr-12">
-          <Link href="/main" className="hover:scale-110 hover:font-bold transition-transform duration-300">
-            หน้าหลัก
-          </Link>
-          <Link href="/main" className="hover:scale-110 hover:font-bold transition-transform duration-300">
-            ผู้ให้คำปรึกษา
-          </Link>
-          <Link href="/main" className="hover:scale-110 hover:font-bold transition-transform duration-300">
-            แบบประเมินตนเอง
-          </Link>
-          <Link href="/main" className="font-bold hover:scale-110 hover:font-bold transition-transform duration-300">
-            บทความ
-          </Link>
+        {/* Navigation Section */}
+        <div className="flex justify-center items-center space-x-32 font-anuphan text-navfont text-xl md:text-2xl md:pl-8">
+          {menuItems.map((item, index) => (
+            <Link key={index} href={item.href} className="hover:scale-110 hover:font-bold transition-transform duration-300">
+                {item.label}
+            </Link>
+          ))}
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Navbar;
