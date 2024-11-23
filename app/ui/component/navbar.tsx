@@ -33,7 +33,7 @@ export default function Header() {
           <Link href="/main" className="hover:scale-110 hover:font-bold transition-transform duration-300">
             แบบประเมินตนเอง
           </Link>
-          <Link href="/main" className="hover:scale-110 hover:font-bold transition-transform duration-300">
+          <Link href="/main" className="font-bold hover:scale-110 hover:font-bold transition-transform duration-300">
             บทความ
           </Link>
         </div>

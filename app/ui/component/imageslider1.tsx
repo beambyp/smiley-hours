@@ -44,11 +44,11 @@ export default function PhotoSlider() {
     </div>
 
     {/* position dot */}
-    <div className="absolute bottom-4 w-full flex justify-center space-x-2">
+    <div className="absolute bottom-2 w-full flex justify-center space-x-2">
         {photos.map((_, index) => (
           <div
             key={index}
-            className={`w-4 h-4 border-2 rounded-full cursor-pointer ${
+            className={`w-2 h-2 border-2 rounded-full cursor-pointer ${
               index === current
                 ? "bg-white border-white"
                 : "bg-transparent border-white"
@@ -59,9 +59,11 @@ export default function PhotoSlider() {
     </div>
 
     {/* position photo */}
+    {/*}
     <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded shadow text-gray-700">
         {`รูปที่ ${current + 1} จาก ${photos.length}`}
     </div>
+    */}
     </div>
   );
 }

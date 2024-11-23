@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
 };
 
 const footerWrapperStyle: React.CSSProperties = {
-    position: "fixed",
+    position: "relative",
     bottom: 0,
     width: "100%",
 };
@@ -71,7 +71,7 @@ const footerTopStyle: React.CSSProperties = {
 const footerBottomStyle: React.CSSProperties = {
     backgroundColor: "#2B6EB0", 
     color: "white",
-    padding: "20px 0",
+    padding: "0px 0",
   };
 
 const containerStyle: React.CSSProperties = {
@@ -82,33 +82,33 @@ const containerStyle: React.CSSProperties = {
 };
 
 const LogoStyle: React.CSSProperties = {
-    position: "fixed",
-    bottom: -11,
-    width: "100%",
-    padding: "20px 0",
-    left: "4%",
+  position: "absolute", 
+  bottom: "0", 
+  left: "4%", 
+  width: "100%",
+  padding: "20px 0",
 };
 const IconStyle: React.CSSProperties = {
-    position: "fixed",
-    bottom: -11.5,
+    position: "absolute",
+    bottom: 0,
     width: "100%",
-    padding: "20px 0",
+    padding: "18px 0",
     left: "91%",
 };
 
 const IconStyle2: React.CSSProperties = {
-    position: "fixed",
-    bottom: -11,
+    position: "absolute",
+    bottom: 0,
     width: "100%",
-    padding: "20px 0",
+    padding: "19px 0",
     left: "93%",
 };
 
 const IconStyle3: React.CSSProperties = {
-    position: "fixed",
-    bottom: -11,
+    position: "relative",
+    bottom: 0,
     width: "100%",
-    padding: "20px 0",
+    padding: "18px 0",
     left: "95%",
 };
 

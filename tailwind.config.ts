@@ -15,9 +15,10 @@ const config: Config = {
         header: "#F2F2F2",
         headerfont: "#005AE0",
         navfont: "#3C95EC",
+        cardtext: "#2B6EB0",
       },
       fontFamily: {
-        montserrat: "var(--font-montserrat)",
+        montserrat: "var(--font-montserrat)", 
         akshar: "var(--font-akshar)",
         anuphan: "var(--font-anuphan)",
       },
