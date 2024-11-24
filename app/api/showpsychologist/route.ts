@@ -18,6 +18,8 @@ export async function GET() {
        return new Response(JSON.stringify(psychologistInfo), { status: 200 });
     }
     catch(error){
-        return new Response(JSON.stringify({ error: "An error occurred while get the information" }), { status: 500 });
+        return new Response(
+            JSON.stringify({ error: `An error occurred while getting the information: ${error}` }), { status: 500 }
+          );
     }
 }
