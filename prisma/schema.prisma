@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -12,6 +13,8 @@ model UserAccount{
   password String 
   Role String
   isApprove Boolean
+  userinfo UserInfo[]
+  psychologistinfo PsychologistInfo[]
 }
 
 model UserInfo{
@@ -21,6 +24,7 @@ model UserInfo{
   gender String
   dateOfBirth String
   phoneNumber String
+  useraccount UserAccount @relation(fields: [email],references: [email])
 }
 
 model PsychologistInfo{
@@ -39,4 +43,5 @@ model PsychologistInfo{
   isSpecializeAdult Boolean
   isSpecializeChildAndTeen Boolean
   isSpecializeElder Boolean
+  useraccount UserAccount @relation(fields: [email],references: [email])
 }
