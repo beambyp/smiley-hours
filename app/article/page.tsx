@@ -5,15 +5,28 @@ import Navbar from "../ui/component/navbar";
 import ImageSlider1 from "../ui/component/imageslider1";
 import Footer from "../ui/component/footer";
 import Card from "../ui/component/card";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
+  const { data: session, status } = useSession();
   {/* Navbar */}
-  const menuItems = [
-    { href: "/main", label: "หน้าหลัก" },
-    { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
-    { href: "/selfAssessment", label: "แบบประเมินตนเอง" },
-    { href: "/article", label: "บทความ" },
-  ];
+  let menuItems = [];
+  if (status === "authenticated" && session?.user) {
+    menuItems = [
+      { href: "/main", label: "หน้าหลัก" },
+      { href: "/selectDocU", label: "ผู้ให้คำปรึกษา" },
+      { href: "/appointment", label: "นัดหมาย" },
+      { href: "/main", label: "ประวัติการรักษา" },
+      { href: "/article", label: "บทความ" },
+    ];
+  } else {
+    menuItems = [
+      { href: "/main", label: "หน้าหลัก" },
+      { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
+      { href: "/main", label: "แบบประเมินตนเอง" },
+      { href: "/article", label: "บทความ" },
+    ];
+  }
 
   {/* Card */}
   const cardData = [

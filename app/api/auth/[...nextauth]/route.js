@@ -25,7 +25,8 @@ const authOptions = {
           (await bcrypt.compare(credentials.password, user.password))
         ) {
           return {
-            email: user.email
+            email: user.email,
+            role: user.role
           }
         } else {
           throw new Error('Invalid email or password')
@@ -41,12 +42,14 @@ const authOptions = {
     jwt: async ({ token, user }) => {
       if (user) {
         token.email = user.email
+        token.role = user.role
       }
       return token
     },
     session: async ({ session, token }) => {
       if (session.user) {
         session.user.email = token.email
+        session.user.role = token.role
       }
       return session
     }

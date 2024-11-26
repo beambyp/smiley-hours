@@ -14,8 +14,7 @@ export async function GET() {
               },
         })
         const psychologistInfo = info.flatMap((user) => user.psychologistinfo || []);
-        console.log(psychologistInfo); 
-       return new Response(JSON.stringify(psychologistInfo), { status: 200 });
+        return new Response(JSON.stringify(psychologistInfo), { status: 200 });
     }
     catch(error){
         return new Response(

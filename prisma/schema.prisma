@@ -45,3 +45,23 @@ model PsychologistInfo{
   isSpecializeElder Boolean
   useraccount UserAccount @relation(fields: [email],references: [email])
 }
+
+model AppointmentRecord{
+  appointmentID Int @id @default(autoincrement())
+  userEmail String
+  psychologistEmail String
+  appointmentDate DateTime
+  consentFormID Int
+  symptom String
+  isCancel Boolean
+  isSuccess Boolean
+  createDate DateTime
+}
+
+model ConsentFormRecord{
+  consentFormID Int @id @default(autoincrement())
+  userEmail String
+  name String
+  surname String
+  dateSigned DateTime
+}

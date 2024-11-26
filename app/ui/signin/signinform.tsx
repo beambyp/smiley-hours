@@ -19,7 +19,7 @@ export default function SignInForm(){
             console.log(res.error)
             return false
         }
-        router.push('/main')
+        router.push('/selectDoc')
     }
     console.log(email)
     console.log(password)
