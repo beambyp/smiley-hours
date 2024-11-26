@@ -25,7 +25,7 @@ export default function Page() {
   let menuItems = [];
   if (status === "authenticated" && session?.user) {
     menuItems = [
-      { href: "/main", label: "หน้าหลัก" },
+      { href: "/home", label: "หน้าหลัก" },
       { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
       { href: "/appointment", label: "นัดหมาย" },
       { href: "/main", label: "ประวัติการรักษา" },
@@ -33,7 +33,7 @@ export default function Page() {
     ];
   } else {
     menuItems = [
-      { href: "/main", label: "หน้าหลัก" },
+      { href: "/home", label: "หน้าหลัก" },
       { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
       { href: "/main", label: "แบบประเมินตนเอง" },
       { href: "/article", label: "บทความ" },

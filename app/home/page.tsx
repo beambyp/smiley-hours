@@ -7,15 +7,28 @@ import ImageSlider2 from "../ui/component/imageslider2";
 import Footer from "../ui/component/footer";
 import Card from "../ui/component/card";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
+    const { data: session, status } = useSession();
     {/* Navbar */ }
-    const menuItems = [
-        { href: "/main", label: "หน้าหลัก" },
-        { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
-        { href: "/selfAssessment", label: "แบบประเมินตนเอง" },
-        { href: "/article", label: "บทความ" },
-    ];
+    let menuItems = [];
+    if (status === "authenticated" && session?.user) {
+        menuItems = [
+            { href: "/home", label: "หน้าหลัก" },
+            { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
+            { href: "/appointment", label: "นัดหมาย" },
+            { href: "/main", label: "ประวัติการรักษา" },
+            { href: "/article", label: "บทความ" },
+        ];
+    } else {
+        menuItems = [
+            { href: "/home", label: "หน้าหลัก" },
+            { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
+            { href: "/main", label: "แบบประเมินตนเอง" },
+            { href: "/article", label: "บทความ" },
+        ];
+    }
 
     {/* Card */ }
     const cardData = [
@@ -85,19 +98,19 @@ export default function Page() {
 
                         {/* Right Section: Buttons */}
                         <div className="mt-16 flex flex-col">
-                            <Link href="/main">
+                            <Link href="/appointment">
                                 <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] rounded-t-lg border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-                                    <div className="text-black text-2xl font-[400] font-akshar break-words">นัดหมาย</div>
+                                    <div className="text-black text-2xl font-[400] font-anuphan break-words">นัดหมาย</div>
                                 </div>
                             </Link>
                             <Link href="/selectDoc">
                                 <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-                                    <div className="text-black text-2xl font-[400] font-akshar break-words">ผู้ให้คำปรึกษา</div>
+                                    <div className="text-black text-2xl font-[400] font-anuphan break-words">ผู้ให้คำปรึกษา</div>
                                 </div>
                             </Link>
                             <Link href="/main">
                                 <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] rounded-b-lg border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-                                    <div className="text-black text-2xl font-[400] font-akshar break-words">แบบประเมินตนเอง</div>
+                                    <div className="text-black text-2xl font-[400] font-anuphan break-words">แบบประเมินตนเอง</div>
                                 </div>
                             </Link>
                         </div>

@@ -3,11 +3,19 @@ import TopHeader from "../ui/component/topheader";
 import Navbar from "../ui/component/navbar";
 import ImageSlider1 from "../ui/component/imageslider1";
 import Footer from "../ui/component/footer";
+import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+    if (status != "authenticated") {
+        router.push("/signin")
+    }
+    console.log(session?.user)
     {/* Navbar */}
     const menuItems = [
-      { href: "/main", label: "หน้าหลัก" },
+      { href: "/home", label: "หน้าหลัก" },
       { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
       { href: "/appointment", label: "นัดหมาย" },
       { href: "/main", label: "ประวัติการรักษา" },
