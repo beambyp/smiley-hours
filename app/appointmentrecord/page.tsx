@@ -17,7 +17,7 @@ export default function Page() {
     const menuItems = [
       { href: "/home", label: "หน้าหลัก" },
       { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
-      { href: "/appointment", label: "นัดหมาย" },
+      { href: "/appointmentrecord", label: "นัดหมาย" },
       { href: "/main", label: "ประวัติการรักษา" },
       { href: "/article", label: "บทความ" },
     ];

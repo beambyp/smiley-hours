@@ -17,7 +17,7 @@ export default function Page() {
         menuItems = [
             { href: "/home", label: "หน้าหลัก" },
             { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
-            { href: "/appointment", label: "นัดหมาย" },
+            { href: "/appointmentrecord", label: "นัดหมาย" },
             { href: "/main", label: "ประวัติการรักษา" },
             { href: "/article", label: "บทความ" },
         ];
@@ -25,7 +25,7 @@ export default function Page() {
         menuItems = [
             { href: "/home", label: "หน้าหลัก" },
             { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
-            { href: "/main", label: "แบบประเมินตนเอง" },
+            { href: "/selfAssessment", label: "แบบประเมินตนเอง" },
             { href: "/article", label: "บทความ" },
         ];
     }
@@ -108,7 +108,7 @@ export default function Page() {
                                     <div className="text-black text-2xl font-[400] font-anuphan break-words">ผู้ให้คำปรึกษา</div>
                                 </div>
                             </Link>
-                            <Link href="/main">
+                            <Link href="/selfAssessment">
                                 <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] rounded-b-lg border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
                                     <div className="text-black text-2xl font-[400] font-anuphan break-words">แบบประเมินตนเอง</div>
                                 </div>
