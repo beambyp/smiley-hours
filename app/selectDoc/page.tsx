@@ -95,11 +95,11 @@ export default function Page() {
       <ImageSlider1 />
       <main className="container bg-foreground mx-auto py-10 shadow-2xl">
         <header className="text-center py-10">
-          <h1 className="font-akshar text-5xl font-bold text-[#2B6EB0]">Smiley Hours</h1>
-          <p className="font-anuphan text-[#60AAF9] text-xl text-gray-600 mt-4">
+          <h1 className="font-akshar text-5xl text-[#2B6EB0]">Smiley Hours</h1>
+          <p className="font-anuphan text-[#60AAF9] text-xl mt-4">
             มีนักจิตวิทยาพร้อมให้คำปรึกษามากมาย พร้อมรับฟัง
           </p>
-          <p className="font-anuphan text-[#60AAF9] text-xl text-gray-600 mt-4">
+          <p className="font-anuphan text-[#60AAF9] text-xl mt-4">
             เเละเข้าใจทุกปัญหา ของทุกคน เลือกนักจิตวิทยาที่ต้องการ เพื่อดูแลหัวใจ
           </p>
         </header>

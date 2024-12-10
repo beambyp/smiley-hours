@@ -44,6 +44,7 @@ model PsychologistInfo{
   isSpecializeChildAndTeen Boolean
   isSpecializeElder Boolean
   useraccount UserAccount @relation(fields: [email],references: [email])
+  appointmentrecord AppointmentRecord[]
 }
 
 model AppointmentRecord{
@@ -56,6 +57,7 @@ model AppointmentRecord{
   isCancel Boolean
   isSuccess Boolean
   createDate DateTime
+  psychologistInfo PsychologistInfo @relation(fields: [psychologistEmail],references: [email])
 }
 
 model ConsentFormRecord{
@@ -64,4 +66,11 @@ model ConsentFormRecord{
   name String
   surname String
   dateSigned DateTime
+}
+
+model PsychologistShift{
+  shiftID Int @id @default(autoincrement())
+  psychologistEmail String
+  availableDateStart DateTime
+  availableDateEnd DateTime
 }

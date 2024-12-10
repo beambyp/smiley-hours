@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+// Create Appointment
 export async function POST(request: Request) {
     try{
     const {userEmail,psychologistEmail,appointmentDate,symptom} = await request.json();
