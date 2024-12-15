@@ -16,7 +16,7 @@ export default function Page() {
       { href: "/home", label: "หน้าหลัก" },
       { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
       { href: "/appointmentrecord", label: "นัดหมาย" },
-      { href: "/main", label: "ประวัติการรักษา" },
+      { href: "/medicalrecord", label: "ประวัติการรักษา" },
       { href: "/article", label: "บทความ" },
     ];
   } else {

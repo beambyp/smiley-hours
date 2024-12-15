@@ -25,6 +25,7 @@ model UserInfo{
   dateOfBirth String
   phoneNumber String
   useraccount UserAccount @relation(fields: [email],references: [email])
+  medicalrecord MedicalRecord[]
 }
 
 model PsychologistInfo{
@@ -45,6 +46,7 @@ model PsychologistInfo{
   isSpecializeElder Boolean
   useraccount UserAccount @relation(fields: [email],references: [email])
   appointmentrecord AppointmentRecord[]
+  medicalrecord MedicalRecord[]
 }
 
 model AppointmentRecord{
@@ -56,6 +58,7 @@ model AppointmentRecord{
   symptom String
   isCancel Boolean
   isSuccess Boolean
+  isDiagnosis Boolean @default(false)
   createDate DateTime
   psychologistInfo PsychologistInfo @relation(fields: [psychologistEmail],references: [email])
 }
@@ -73,4 +76,16 @@ model PsychologistShift{
   psychologistEmail String
   availableDateStart DateTime
   availableDateEnd DateTime
+}
+
+model MedicalRecord{
+  recordID Int @id @default(autoincrement())
+  userEmail String
+  psychologistEmail String
+  treatmentDate DateTime
+  symptom String @db.VarChar(1024)
+  diagnosis String @db.VarChar(1024)
+  advice String @db.VarChar(1024)
+  psychologistInfo PsychologistInfo @relation(fields: [psychologistEmail],references: [email])
+  userInfo UserInfo  @relation(fields: [userEmail],references: [email])
 }

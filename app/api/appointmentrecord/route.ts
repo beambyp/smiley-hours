@@ -1,12 +1,12 @@
 import { PrismaClient } from "@prisma/client";
-
 const prisma = new PrismaClient();
 
-// Get All Appointment 
+// Get All Appointment
 export async function GET(request: Request) { 
     try {
         const { searchParams } = new URL(request.url); 
         const user = searchParams.get('user'); 
+        const now = new Date();
 
         if (user == null) {
             return new Response(
@@ -18,7 +18,10 @@ export async function GET(request: Request) {
         const appointment = await prisma.appointmentRecord.findMany({
             where: {
                 userEmail: user,
-                isSuccess: true
+                isSuccess: true,
+                appointmentDate: {
+                    gte: now, 
+                },
             },
             include: {
                 psychologistInfo: true

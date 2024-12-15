@@ -13,13 +13,22 @@ export default function Page() {
     const { data: session, status } = useSession();
     {/* Navbar */ }
     let menuItems = [];
-    if (status === "authenticated" && session?.user) {
+    if (status === "authenticated" && session?.user.Role == "User") {
         menuItems = [
             { href: "/home", label: "หน้าหลัก" },
             { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
             { href: "/appointmentrecord", label: "นัดหมาย" },
-            { href: "/main", label: "ประวัติการรักษา" },
+            { href: "/medicalrecord", label: "ประวัติการรักษา" },
             { href: "/article", label: "บทความ" },
+        ];
+    }
+    else if (status === "authenticated" && session?.user.Role == "Psychologist") {
+        menuItems = [
+            { href: "/home", label: "หน้าหลัก" },
+            { href: "/schedule", label: "ตารางงาน" },
+            { href: "/appointmentrecord", label: "นัดหมาย" },
+            { href: "/medicalrecord", label: "ผลวินิจฉัย" },
+            { href: "/medicalrecord", label: "ประวัติการรักษา" },
         ];
     } else {
         menuItems = [
@@ -76,6 +85,51 @@ export default function Page() {
         },
     ];
 
+    const handleButton = () => {
+        if (status === "authenticated" && session?.user.Role == "User" || status === "unauthenticated") {
+            return (
+                <div className="mt-16 flex flex-col">
+                    <Link href="/appointmentrecord">
+                        <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] rounded-t-lg border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                            <div className="text-black text-2xl font-[400] font-anuphan break-words">นัดหมาย</div>
+                        </div>
+                    </Link>
+                    <Link href="/selectDoc">
+                        <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                            <div className="text-black text-2xl font-[400] font-anuphan break-words">ผู้ให้คำปรึกษา</div>
+                        </div>
+                    </Link>
+                    <Link href="/selfAssessment">
+                        <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] rounded-b-lg border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                            <div className="text-black text-2xl font-[400] font-anuphan break-words">แบบประเมินตนเอง</div>
+                        </div>
+                    </Link>
+                </div>
+            )
+        }
+        else if (status === "authenticated" && session?.user.Role == "Psychologist") {
+            return (
+                <div className="mt-16 flex flex-col">
+                    <Link href="/schedule">
+                        <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] rounded-t-lg border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                            <div className="text-black text-2xl font-[400] font-anuphan break-words">ตารางงาน</div>
+                        </div>
+                    </Link>
+                    <Link href="/appointmentrecord">
+                        <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                            <div className="text-black text-2xl font-[400] font-anuphan break-words">นัดหมายของฉัน</div>
+                        </div>
+                    </Link>
+                    <Link href="/selfAssessment">
+                        <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] rounded-b-lg border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                            <div className="text-black text-2xl font-[400] font-anuphan break-words">ผลวินิจฉัย</div>
+                        </div>
+                    </Link>
+                </div>
+            )
+        }
+    }
+
     return (
         <div>
             <TopHeader />
@@ -97,23 +151,7 @@ export default function Page() {
                         </div>
 
                         {/* Right Section: Buttons */}
-                        <div className="mt-16 flex flex-col">
-                            <Link href="/appointment">
-                                <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] rounded-t-lg border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-                                    <div className="text-black text-2xl font-[400] font-anuphan break-words">นัดหมาย</div>
-                                </div>
-                            </Link>
-                            <Link href="/selectDoc">
-                                <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-                                    <div className="text-black text-2xl font-[400] font-anuphan break-words">ผู้ให้คำปรึกษา</div>
-                                </div>
-                            </Link>
-                            <Link href="/selfAssessment">
-                                <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] rounded-b-lg border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-                                    <div className="text-black text-2xl font-[400] font-anuphan break-words">แบบประเมินตนเอง</div>
-                                </div>
-                            </Link>
-                        </div>
+                        {handleButton()}
                     </div>
                 </div>
 
@@ -149,37 +187,39 @@ export default function Page() {
             </div>
 
             {/* Section 2: Cards */}
-            <section className="container bg-foreground flex flex-col justify-center items-center mx-auto py-8 shadow-2xl min-h-screen">
-                {/* Section 2.1: tittle article */}
-                <div
-                    className="relative w-[1536px] h-[450px] flex items-center bg-cover bg-center mt-20"
-                    style={{ backgroundImage: "url('/home/BgHome2.png')" }}
-                >
-                    <div className="container flex justify-end">
-                        {/* Text Content */}
-                        <div className="flex flex-col max-w-4xl">
-                            <h2 className="font-anuphan text-6xl font-bold text-[#2A5A8C] pr-60 leading-relaxed">
-                                บทความที่เกี่ยวข้อง
-                            </h2>
+            {session?.user.Role != "Psychologist" && (
+                <section className="container bg-foreground flex flex-col justify-center items-center mx-auto py-8 shadow-2xl min-h-screen">
+                    {/* Section 2.1: title article */}
+                    <div
+                        className="relative w-[1536px] h-[450px] flex items-center bg-cover bg-center mt-20"
+                        style={{ backgroundImage: "url('/home/BgHome2.png')" }}
+                    >
+                        <div className="container flex justify-end">
+                            {/* Text Content */}
+                            <div className="flex flex-col max-w-4xl">
+                                <h2 className="font-anuphan text-6xl font-bold text-[#2A5A8C] pr-60 leading-relaxed">
+                                    บทความที่เกี่ยวข้อง
+                                </h2>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {/* Section 2.2: Cards */}
-                <div className="w-full py-40">
-                    <div className="grid md:grid-cols-3 gap-x-10 gap-y-24 pr-40 pl-60">
-                        {cardData.map((card, index) => (
-                            <Card
-                                key={index}
-                                title={card.title}
-                                subtitle={card.subtitle}
-                                image={card.image}
-                                description={card.description}
-                                pdfUrl={card.pdfUrl}
-                            />
-                        ))}
+                    {/* Section 2.2: Cards */}
+                    <div className="w-full py-40">
+                        <div className="grid md:grid-cols-3 gap-x-10 gap-y-24 pr-40 pl-60">
+                            {cardData.map((card, index) => (
+                                <Card
+                                    key={index}
+                                    title={card.title}
+                                    subtitle={card.subtitle}
+                                    image={card.image}
+                                    description={card.description}
+                                    pdfUrl={card.pdfUrl}
+                                />
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
             <Footer />
         </div>
