@@ -25,6 +25,7 @@ model UserInfo{
   dateOfBirth String
   phoneNumber String
   useraccount UserAccount @relation(fields: [email],references: [email])
+  appointmentrecord AppointmentRecord[]
   medicalrecord MedicalRecord[]
 }
 
@@ -61,6 +62,7 @@ model AppointmentRecord{
   isDiagnosis Boolean @default(false)
   createDate DateTime
   psychologistInfo PsychologistInfo @relation(fields: [psychologistEmail],references: [email])
+  userInfo UserInfo  @relation(fields: [userEmail],references: [email])
 }
 
 model ConsentFormRecord{

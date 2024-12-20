@@ -42,7 +42,7 @@ export default function Page() {
       { href: "/home", label: "หน้าหลัก" },
       { href: "/schedule", label: "ตารางงาน" },
       { href: "/appointmentrecord", label: "นัดหมาย" },
-      { href: "/medicalrecord", label: "ผลวินิจฉัย" },
+      { href: "/result", label: "ผลวินิจฉัย" },
       { href: "/medicalrecord", label: "ประวัติการรักษา" },
     ];
   }

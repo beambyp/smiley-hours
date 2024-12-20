@@ -27,7 +27,7 @@ export default function Page() {
             { href: "/home", label: "หน้าหลัก" },
             { href: "/schedule", label: "ตารางงาน" },
             { href: "/appointmentrecord", label: "นัดหมาย" },
-            { href: "/medicalrecord", label: "ผลวินิจฉัย" },
+            { href: "/result", label: "ผลวินิจฉัย" },
             { href: "/medicalrecord", label: "ประวัติการรักษา" },
         ];
     } else {
@@ -120,7 +120,7 @@ export default function Page() {
                             <div className="text-black text-2xl font-[400] font-anuphan break-words">นัดหมายของฉัน</div>
                         </div>
                     </Link>
-                    <Link href="/selfAssessment">
+                    <Link href="/result">
                         <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] rounded-b-lg border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
                             <div className="text-black text-2xl font-[400] font-anuphan break-words">ผลวินิจฉัย</div>
                         </div>

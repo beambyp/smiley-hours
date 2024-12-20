@@ -23,13 +23,25 @@ export default function Page() {
     router.push("/signin")
   }
   {/* Navbar */ }
-  const menuItems = [
-    { href: "/home", label: "หน้าหลัก" },
-    { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
-    { href: "/appointmentrecord", label: "นัดหมาย" },
-    { href: "/medicalrecord", label: "ประวัติการรักษา" },
-    { href: "/article", label: "บทความ" },
-  ];
+  let menuItems = [];
+  if (session?.user.Role == "User") {
+    menuItems = [
+      { href: "/home", label: "หน้าหลัก" },
+      { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
+      { href: "/appointmentrecord", label: "นัดหมาย" },
+      { href: "/medicalrecord", label: "ประวัติการรักษา" },
+      { href: "/article", label: "บทความ" },
+    ];
+  }
+  else {
+    menuItems = [
+      { href: "/home", label: "หน้าหลัก" },
+      { href: "/schedule", label: "ตารางงาน" },
+      { href: "/appointmentrecord", label: "นัดหมาย" },
+      { href: "/result", label: "ผลวินิจฉัย" },
+      { href: "/medicalrecord", label: "ประวัติการรักษา" },
+    ];
+  }
 
   const [recordData, setRecordData] = useState<AppointmentData[]>([]);
   const [filter, setFilter] = useState<string>("ทั้งหมด");
