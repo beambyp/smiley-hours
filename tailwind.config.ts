@@ -1,11 +1,11 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-    content: [
-      "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-      "./components/**/*.{js,ts,jsx,tsx,mdx}",
-      "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    ],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {
       colors: {
@@ -16,9 +16,9 @@ const config: Config = {
         headerfont: "#005AE0",
         navfont: "#3C95EC",
         cardtext: "#2B6EB0",
-      }, 
+      },
       fontFamily: {
-        montserrat: "var(--font-montserrat)", 
+        montserrat: "var(--font-montserrat)",
         akshar: "var(--font-akshar)",
         anuphan: "var(--font-anuphan)",
       },
@@ -27,7 +27,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require("tailwind-scrollbar"), // ตรวจสอบการติดตั้ง
+  ],
 };
 
 export default config;

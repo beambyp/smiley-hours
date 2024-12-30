@@ -165,8 +165,8 @@ export default function Page() {
                     </div>
                 </div>
                 {/* Section 2.2: Cards */}
-                <div className="w-full py-40">
-                    <div className="grid md:grid-cols-3 gap-x-10 gap-y-24 pr-40 pl-60">
+                <div className="w-full flex justify-center items-center py-40">
+                    <div className="flex  grid md:grid-cols-3 gap-x-20 gap-y-20">
                         {cardData.map((card, index) => (
                             <Card
                                 key={index}
