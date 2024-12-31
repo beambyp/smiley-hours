@@ -5,39 +5,65 @@ const prisma = new PrismaClient();
 // Create Appointment
 export async function POST(request: Request) {
     try{
-    const {userEmail,psychologistEmail,appointmentDate,symptom} = await request.json();
-    const user = await prisma.userInfo.findUnique({
-        where: { email: userEmail },
-    });
-    if (!user) {
-        throw new Error("User not found");
-    }
-    const now = new Date().toISOString();
-    const appointmentDateISO = new Date(appointmentDate).toISOString();
-    const consentForm = await prisma.consentFormRecord.create({
-        data: {
-            userEmail,
-            name: user.name,
-            surname: user.surname,
-            dateSigned: now,
-        },
-    });
-    const appointmentRecord = await prisma.appointmentRecord.create({
-        data:{
-            userEmail,
-            psychologistEmail,
-            appointmentDate: appointmentDateISO,
-            consentFormID: consentForm.consentFormID,
-            symptom,
-            isCancel: false,
-            isSuccess: true,
-            isDiagnosis: true,
-            createDate: now,
+    let appointmentRecord;
+    const {userEmail,psychologistEmail,role,appointmentDate,symptom} = await request.json();
+    if(role == "User"){ //User
+        const user = await prisma.userInfo.findUnique({
+            where: { email: userEmail },
+        });
+        if (!user) {
+            throw new Error("User not found");
         }
-    })
+        const now = new Date().toISOString();
+        const appointmentDateISO = new Date(appointmentDate).toISOString();
+        const consentForm = await prisma.consentFormRecord.create({
+            data: {
+                userEmail,
+                name: user.name,
+                surname: user.surname,
+                dateSigned: now,
+            },
+        });
+        appointmentRecord = await prisma.appointmentRecord.create({
+            data:{
+                userEmail,
+                psychologistEmail,
+                appointmentDate: appointmentDateISO,
+                consentFormID: consentForm.consentFormID,
+                symptom,
+                isCancel: false,
+                isSuccess: true,
+                isDiagnosis: true,
+                createDate: now,
+            }
+        })
+    }
+    else{ //Psychologist 
+        const user = await prisma.psychologistInfo.findUnique({
+            where: { email: psychologistEmail },
+        });
+        if (!user) {
+            throw new Error("Psychologist not found");
+        }
+        const now = new Date().toISOString();
+        const appointmentDateISO = new Date(appointmentDate).toISOString();
+        appointmentRecord = await prisma.appointmentRecord.create({
+            data:{
+                userEmail,
+                psychologistEmail,
+                appointmentDate: appointmentDateISO,
+                consentFormID: null,
+                symptom: "",
+                isCancel: false,
+                isSuccess: false,
+                isDiagnosis: false,
+                createDate: now,
+            }
+        })
+    }
     return new Response(JSON.stringify(appointmentRecord), { status: 200 });
     } catch (error) {
-        console.error("Error creating user account:", error);
+        console.error("Error creating appointment:", error);
         return new Response(JSON.stringify({ error: "An error occurred while creating the appointment." }), { status: 500 });
     }
 }

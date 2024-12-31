@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model UserAccount{
+model UserAccount {
   email String @unique
   password String 
   Role String
@@ -17,7 +17,7 @@ model UserAccount{
   psychologistinfo PsychologistInfo[]
 }
 
-model UserInfo{
+model UserInfo {
   email String @unique
   name String
   surname String
@@ -29,7 +29,7 @@ model UserInfo{
   medicalrecord MedicalRecord[]
 }
 
-model PsychologistInfo{
+model PsychologistInfo {
   email String @unique
   citizenID String
   name String
@@ -50,12 +50,12 @@ model PsychologistInfo{
   medicalrecord MedicalRecord[]
 }
 
-model AppointmentRecord{
+model AppointmentRecord {
   appointmentID Int @id @default(autoincrement())
   userEmail String
   psychologistEmail String
   appointmentDate DateTime
-  consentFormID Int
+  consentFormID Int?
   symptom String
   isCancel Boolean
   isSuccess Boolean
@@ -65,7 +65,7 @@ model AppointmentRecord{
   userInfo UserInfo  @relation(fields: [userEmail],references: [email])
 }
 
-model ConsentFormRecord{
+model ConsentFormRecord {
   consentFormID Int @id @default(autoincrement())
   userEmail String
   name String
@@ -73,14 +73,14 @@ model ConsentFormRecord{
   dateSigned DateTime
 }
 
-model PsychologistShift{
+model PsychologistShift {
   shiftID Int @id @default(autoincrement())
   psychologistEmail String
   availableDateStart DateTime
   availableDateEnd DateTime
 }
 
-model MedicalRecord{
+model MedicalRecord {
   recordID Int @id @default(autoincrement())
   userEmail String
   psychologistEmail String
@@ -90,4 +90,20 @@ model MedicalRecord{
   advice String @db.VarChar(1024)
   psychologistInfo PsychologistInfo @relation(fields: [psychologistEmail],references: [email])
   userInfo UserInfo  @relation(fields: [userEmail],references: [email])
+}
+
+model ChatRecord {
+  chatID Int @id @default(autoincrement())
+  userEmail String
+  psychologistEmail String
+  message MessageRecord[]
+}
+
+model MessageRecord {
+  messageID Int @id @default(autoincrement())
+  chatID Int
+  senderEmail String
+  messageContent String
+  messageDate DateTime
+  chatRecord ChatRecord @relation(fields: [chatID],references: [chatID])
 }

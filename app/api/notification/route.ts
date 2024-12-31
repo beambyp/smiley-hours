@@ -14,8 +14,10 @@ export async function POST(request: Request) {
                     userEmail: email,
                     isSuccess: true,
                     appointmentDate: {
-                        gte: now,
-                        lt: new Date(now.getTime() + 1 * 60 * 60 * 1000),
+                        //gte: now,
+                        //lt: new Date(now.getTime() + 1 * 60 * 60 * 1000), 
+                        gte: new Date(now.getTime() - 60 * 60 * 1000), // 1 hour before now
+                        lt: new Date(now.getTime() + 60 * 60 * 1000), // 1 hour after now
                     },
                 },
                 include: {
@@ -33,8 +35,8 @@ export async function POST(request: Request) {
                     psychologistEmail: email,
                     isSuccess: true,
                     appointmentDate: {
-                        gte: now,
-                        lt: new Date(now.getTime() + 1 * 60 * 60 * 1000),
+                        gte: new Date(now.getTime() - 60 * 60 * 1000), // 1 hour before now
+                        lt: new Date(now.getTime() + 60 * 60 * 1000), // 1 hour after now
                     },
                 },
                 include: {
