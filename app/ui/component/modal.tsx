@@ -21,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, image, categories
     const router = useRouter()
     const handleClick = () => {
         if (status == "authenticated" && session.user) {
-            router.push("/appointment")
+            router.push("/processAppointment")
         }
         else {
             router.push("/signin")

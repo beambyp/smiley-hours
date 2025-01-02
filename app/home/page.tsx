@@ -25,7 +25,7 @@ export default function Page() {
     else if (status === "authenticated" && session?.user.Role == "Psychologist") {
         menuItems = [
             { href: "/home", label: "หน้าหลัก" },
-            { href: "/schedule", label: "ตารางงาน" },
+            { href: "/scheduleD", label: "ตารางงาน" },
             { href: "/appointmentrecord", label: "นัดหมาย" },
             { href: "/result", label: "ผลวินิจฉัย" },
             { href: "/medicalrecord", label: "ประวัติการรักษา" },
@@ -110,7 +110,7 @@ export default function Page() {
         else if (status === "authenticated" && session?.user.Role == "Psychologist") {
             return (
                 <div className="mt-16 flex flex-col">
-                    <Link href="/schedule">
+                    <Link href="/scheduleD">
                         <div className="inline-flex w-[120%] h-0 px-12 py-7 bg-[#96C7FF] rounded-t-lg border border-b-gray-300 justify-center items-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
                             <div className="text-black text-2xl font-[400] font-anuphan break-words">ตารางงาน</div>
                         </div>

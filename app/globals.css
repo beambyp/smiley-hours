@@ -14,6 +14,7 @@
   }
 }
 
+
 body {
   overflow-x: hidden;
   color: var(--foreground);
@@ -24,5 +25,40 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* Scrollbar Always Visible with Spacing */
+.scrollbar-visible {
+  overflow-y: scroll; /* เปิด scrollbar เสมอ */
+  overflow-x: hidden; /* ปิด scrollbar แนวนอน */
+  padding-right: 20px; /* เพิ่มพื้นที่ว่างทางด้านขวา */
+  box-sizing: border-box; /* ทำให้ padding อยู่ในขอบของกรอบ */
+  border-radius: 8px; /* เพิ่มความโค้งของมุม */
+}
+
+.scrollbar-visible::-webkit-scrollbar {
+  width: 10px; /* ความกว้างของ scrollbar */
+}
+
+.scrollbar-visible::-webkit-scrollbar-thumb {
+  background-color: #b0b0b0; /* สี scrollbar */
+  border-radius: 4px; /* มุม scrollbar */
+  border: 10px solid transparent; /* เพิ่มระยะห่าง */
+  box-shadow: inset 10px transparent; /* ช่องว่างระหว่าง scrollbar และ track */
+}
+
+.scrollbar-visible::-webkit-scrollbar-track {
+  background-color: #f0f0f0; /* สี track */
+}
+
+/* Dark Mode Scrollbar with Spacing */
+@media (prefers-color-scheme: dark) {
+  .scrollbar-visible::-webkit-scrollbar-thumb {
+    background-color: #555555; /* สี scrollbar thumb ในโหมดมืด */
+  }
+
+  .scrollbar-visible::-webkit-scrollbar-track {
+    background-color: #1a1a1a; /* สี track ในโหมดมืด */
   }
 }

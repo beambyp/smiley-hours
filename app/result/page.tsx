@@ -31,7 +31,7 @@ export default function Page() {
     {/* Navbar */ }
     const menuItems = [
         { href: "/home", label: "หน้าหลัก" },
-        { href: "/schedule", label: "ตารางงาน" },
+        { href: "/scheduleD", label: "ตารางงาน" },
         { href: "/appointmentrecord", label: "นัดหมาย" },
         { href: "/result", label: "ผลวินิจฉัย" },
         { href: "/medicalrecord", label: "ประวัติการรักษา" },

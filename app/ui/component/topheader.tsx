@@ -46,8 +46,6 @@ export default function TopHeader() {
         return () => clearInterval(interval);
     }, []);
 
-    console.log(notifications);
-
     return (
         <div className="bg-topheader text-white py-2">
             <div className="flex justify-between items-center w-full px-4">
