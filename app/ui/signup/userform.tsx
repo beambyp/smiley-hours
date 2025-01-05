@@ -150,7 +150,7 @@ export default function UserForm(){
           </div>
           <button
             type="submit"
-            className="font-akshar mt-4 w-full bg-[#2B6EB0] text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition"
+            className="font-akshar mt-4 w-full bg-[#2B6EB0] text-white font-semibold py-2 rounded-md hover:bg-gray-400 transition"
           >
             Sign Up
           </button>

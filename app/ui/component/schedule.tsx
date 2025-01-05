@@ -237,22 +237,22 @@ const Schedule: React.FC = () => {
                     {submittedSchedules.length > 0 ? (
                         submittedSchedules.map((schedule, index) => (
                             <tr key={index}>
-                                <td className="border-r border-b border-gray-300 p-3 text-center w-1/3 font-akshar">
+                                <td className="border-r border-b border-gray-300 p-3 text-center w-1/3 font-akshar bg-white">
                                     {schedule.date ? dayjs(schedule.date).format("dddd, D MMMM YYYY") : "-"}
                                 </td>
-                                <td className="border-r border-b border-gray-300 p-3 text-center w-1/3 font-akshar">
+                                <td className="border-r border-b border-gray-300 p-3 text-center w-1/3 font-akshar bg-white">
                                     {schedule.startTime || "-"}
                                 </td>
-                                <td className="border-r border-b border-gray-300 p-3 text-center w-1/3 font-akshar">
+                                <td className="border-r border-b border-gray-300 p-3 text-center w-1/3 font-akshar bg-white">
                                     {schedule.endTime || "-"}
                                 </td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td className="border-r border-gray-300 p-3 text-center w-1/3">-</td>
-                            <td className="border-r border-gray-300 p-3 text-center w-1/3">-</td>
-                            <td className="p-3 text-center w-1/3">-</td>
+                            <td className="border-r border-gray-300 p-3 text-center w-1/3 bg-white">-</td>
+                            <td className="border-r border-gray-300 p-3 text-center w-1/3 bg-white">-</td>
+                            <td className="p-3 text-center w-1/3 bg-white">-</td>
                         </tr>
                     )}
                 </tbody>

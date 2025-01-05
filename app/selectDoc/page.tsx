@@ -10,6 +10,7 @@ import Modal from "../ui/component/modal";
 import { useSession } from "next-auth/react";
 
 type CardData = {
+  email: string;
   title: string;
   image: string;
   categories: string;
@@ -52,6 +53,7 @@ export default function Page() {
         const data = await response.json();
         if (Array.isArray(data)) {
           const mappedData: CardData[] = data.map((psychologist) => ({
+            email: psychologist.email,
             title: `${psychologist.name} ${psychologist.surname}`,
             image: psychologist.psychologistPhoto || "/doctor/d5.png",
             categories: [
@@ -160,6 +162,7 @@ export default function Page() {
         <Modal
           isOpen={modalOpen}
           onClose={closeModal}
+          email={selectedCard?.email || ""}
           title={selectedCard?.title || ""}
           image={selectedCard?.image || "/doctor/d5.png"}
           categories={selectedCard?.categories || ""}

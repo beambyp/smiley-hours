@@ -197,15 +197,15 @@ export default function Page() {
                         <div className="container flex justify-end">
                             {/* Text Content */}
                             <div className="flex flex-col max-w-4xl">
-                                <h2 className="font-anuphan text-6xl font-bold text-[#2A5A8C] pr-60 leading-relaxed">
+                                <h2 className="font-anuphan text-6xl font-bold text-[#2A5A8C] flex  leading-relaxed">
                                     บทความที่เกี่ยวข้อง
                                 </h2>
                             </div>
                         </div>
                     </div>
                     {/* Section 2.2: Cards */}
-                    <div className="w-full py-40">
-                        <div className="grid md:grid-cols-3 gap-x-10 gap-y-24 pr-40 pl-60">
+                    <div className="flex justify-center items-center w-full py-40">
+                        <div className="grid md:grid-cols-3 gap-x-20 gap-y-20">
                             {cardData.map((card, index) => (
                                 <Card
                                     key={index}

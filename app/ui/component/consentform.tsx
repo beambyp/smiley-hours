@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/th"; // Import ภาษาไทย
 
@@ -110,6 +110,23 @@ const Consentform: React.FC = () => {
     return <span>{formattedDate}</span>;
   };
 
+  const [doctorTitle, setDoctorTitle] = useState("");
+  const [doctorEmail, setDoctorEmail] = useState("");
+  
+  useEffect(() => {
+    // Retrieve data from localStorage
+    const title = localStorage.getItem("doctorTitle");
+    const email = localStorage.getItem("doctorEmail");
+    if (title) {
+      setDoctorTitle(title);
+    }
+    if (email) {
+      setDoctorEmail(email);
+    }
+  }, []);
+
+console.log(doctorTitle);
+console.log(doctorEmail);
   return (
     <div className="bg-gray-100 p-6 max-h-6xl min-h-screen">
       {/* Step 1: แสดงเนื้อหาข้อตกลง */}
@@ -326,7 +343,7 @@ const Consentform: React.FC = () => {
           <div className="bg-[#D1E3F6] p-10 rounded-md max-w-6xl mx-auto">
             <p className="font-anuphan text-2xl text-[#2B6EB0] font-semibold mb-10">
               <span>นักจิตวิทยา:</span>
-              <span className="font-normal"> {formData.firstName} {formData.lastName}</span>
+              <span className="font-normal"> {doctorTitle}</span>
             </p>
             <p className="font-anuphan text-2xl text-[#2B6EB0] font-semibold mb-10">
               <span>วันที่:</span>

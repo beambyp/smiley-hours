@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import UserForm from "../ui/signup/userform";
@@ -14,29 +14,32 @@ export default function Page() {
     };
 
     return (
-        <div className="bg-white flex w-screen h-screen">
-                <div className="md:w-1/2 w-screen relative">
-                    <div className="text-center">
-                        <Image
-                        src="/signin/login.png"
-                        alt="Login Background"
-                        fill={true}
-                        className="object-cover"
-                        priority
-                        />
-                    </div>
-                </div>
-                <div className="md:w-1/2 w-screen p-16 md:p-8 grid grid-col content-around">
-                    <div className="max-h-screen">
+        <div className="flex flex-col md:flex-row w-full h-screen">
+            {/* Left Section: Image */}
+            <div className="relative w-full md:w-1/2 h-1/3 md:h-full">
+                <Image
+                    src="/signin/logo.png"
+                    alt="Login Background"
+                    fill
+                    className="object-cover h-full w-full"
+                    priority
+                />
+            </div>
+
+            {/* Right Section: Form */}
+            <div className="flex w-full md:w-1/2 h-full bg-white p-8 items-center justify-center">
+                <div className="max-w-lg w-full">
                     {!selectedRole ? (
-                    <SelectRole onSelect={handleRoleSelect} />
-                    ) : selectedRole === 'patient' ? (
+                        <SelectRole onSelect={handleRoleSelect} />
+                    ) : selectedRole === "patient" ? (
                         <UserForm />
                     ) : (
                         <PsychologistForm />
                     )}
-                    </div>
                 </div>
+            </div>
         </div>
     );
-};
+}
+
+
