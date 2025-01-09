@@ -1,9 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/th"; // Import ภาษาไทย
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 
+interface AppointmentData {
+  appointmentId: number;
+  appointmentDate: string;
+  Name: string;
+  isCancel: boolean;
+  symptom: string;
+  status: string;
+}
 
 const Consentform: React.FC = () => {
+  const { data: session } = useSession();
+  const user = session?.user.email;
+  const [appointmentData, setAppointmentData] = useState<AppointmentData | null>(null);
+  useEffect(() => {
+    const storedData = localStorage.getItem("appointmentData");
+    if (storedData) {
+      setAppointmentData(JSON.parse(storedData));
+      console.log(appointmentData);
+    }
+  }, []);
 
   const [step, setStep] = useState(1); // จัดการสถานะของขั้นตอน
   const [formData, setFormData] = useState({
@@ -39,6 +60,12 @@ const Consentform: React.FC = () => {
   };
 
   const validateStep1 = () => {
+    if (appointmentData?.appointmentDate) {
+      setFormData((prevData) => ({
+        ...prevData,
+        date: dayjs(appointmentData.appointmentDate).format('YYYY-MM-DD')
+      }));
+    }
     const newErrors = {
       firstName: formData.firstName.trim() === "",
       lastName: formData.lastName.trim() === "",
@@ -69,6 +96,10 @@ const Consentform: React.FC = () => {
     if (step === 1 && validateStep1()) {
       console.log("Step 1 validated");
       setStep(2); // ไป Step 2
+    }
+    if (step === 1 && appointmentData) {
+      console.log("Step 3 validated");
+      setStep(3); // ไป Step 3
     } if (step === 2 && validateStep1()) {
       console.log("Step 2 validated");
       setStep(3); // ไป Step 2
@@ -77,10 +108,39 @@ const Consentform: React.FC = () => {
 
   const handleBack = () => {
     if (step === 3) {
-      console.log("Step 1 validated");
+      console.log("Step 2 validated");
       setStep(2);
     }
+    if (step === 3 && appointmentData) {
+      console.log("Step 1 validated");
+      setStep(1);
+    }
   };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('/api/consentform', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: appointmentData?.appointmentId,
+          userEmail: user,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Consent Form created successfully');
+        localStorage.clear();
+        setStep(4);
+      } else {
+        console.error('Failed to create ccnsent form');
+      }
+    } catch (error) {
+      console.error('An error occurred while creating the consent form:', error);
+    }
+  }
 
   const addOneHourToTime = (time: string): string => {
     // Split the time string into hours and minutes
@@ -101,7 +161,7 @@ const Consentform: React.FC = () => {
 
   const DateDisplay: React.FC<{ date: string }> = ({ date }) => {
     // ตั้งค่าภาษาเป็นภาษาไทย
-    dayjs.locale("th");
+    //dayjs.locale("th");
     // วันที่ที่ต้องการแสดง
     const displayDate = dayjs(date);
     // ฟอร์แมตวันที่
@@ -109,7 +169,6 @@ const Consentform: React.FC = () => {
 
     return <span>{formattedDate}</span>;
   };
-
   return (
     <div className="bg-gray-100 p-6 max-h-6xl min-h-screen">
       {/* Step 1: แสดงเนื้อหาข้อตกลง */}
@@ -326,21 +385,29 @@ const Consentform: React.FC = () => {
           <div className="bg-[#D1E3F6] p-10 rounded-md max-w-6xl mx-auto">
             <p className="font-anuphan text-2xl text-[#2B6EB0] font-semibold mb-10">
               <span>นักจิตวิทยา:</span>
-              <span className="font-normal"> {formData.firstName} {formData.lastName}</span>
+              <span className="font-normal"> {appointmentData?.Name || formData.firstName}</span>
             </p>
             <p className="font-anuphan text-2xl text-[#2B6EB0] font-semibold mb-10">
-              <span>วันที่:</span>
-              <span className="font-normal"> <DateDisplay date={formData.date} /> </span>
+              <span>วันที่: </span>
+              <span className="font-normal">
+                <DateDisplay date={appointmentData?.appointmentDate || formData.date + formData.lastName} />
+              </span>
             </p>
             <p className="font-anuphan text-2xl text-[#2B6EB0] font-semibold mb-10">
-              <span>เวลา:</span>
-              <span className="font-normal"> {formData.time} - {addOneHourToTime(formData.time)} น. </span>
+              <span>เวลา: </span>
+              <span className="font-normal">
+                {appointmentData?.appointmentDate
+                  ? dayjs(appointmentData.appointmentDate).format('HH:mm') + " - " +
+                  dayjs(appointmentData.appointmentDate).add(1, 'hour').format('HH:mm')
+                  : formData.time + " - " + addOneHourToTime(formData.time)}{" "}
+                น.
+              </span>
             </p>
             <p className="font-anuphan text-2xl text-[#2B6EB0] font-semibold mb-6">
               อาการเบื้องต้น:
             </p>
             <p className="font-anuphan text-2xl text-[#2B6EB0] font-normal mb-10">
-              {formData.symptoms}
+              {appointmentData?.symptom || formData.symptoms}
             </p>
           </div>
           <div className="flex justify-between items-center mt-2">
@@ -355,14 +422,41 @@ const Consentform: React.FC = () => {
             <button
               type="button"
               className="bg-[#2B6EB0] text-white font-anuphan px-4 py-1 rounded-md mt-10 hover:bg-gray-300 hover:text-black text-lg ml-auto"
-              onClick={handleNext}
+              onClick={handleSubmit}
             >
-              ต่อไป
+              นัดหมาย
             </button>
           </div>
         </div>
       )}
+      {step === 4 && (
+        <div className="p-6 max-w-6xl mx-auto">
+          <h2 className="font-anuphan text-3xl text-[#2B6EB0] font-bold mb-10">
+            รายการนัดหมายสมบูรณ์
+          </h2>
 
+          <div className="bg-[#D1E3F6] p-10 rounded-md shadow-md flex flex-col items-center">
+            <Image src="/logo/logo.png" alt="Logo" width={200} height={200} />
+            <p className="font-anuphan text-xl text-[#2B6EB0] font-semibold mb-2">
+              รอรับการดูแลหัวใจ
+            </p>
+            <p className="font-anuphan text-lg text-[#2B6EB0] font-normal text-center">
+              ตรวจสอบรายการนัดหมายได้ที่หน้านัดหมาย
+            </p>
+          </div>
+          {/* Button */}
+          <div className="flex justify-between items-end mt-2">
+            <button
+              type="button"
+              className="bg-[#2B6EB0] flex justify-between text-white font-anuphan px-4 py-1 rounded-md mt-10 hover:bg-gray-300 hover:text-black text-lg ml-auto"
+            >
+              <Link href="/appointmentrecord">
+                นัดหมายของฉัน
+              </Link>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

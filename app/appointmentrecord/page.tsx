@@ -10,6 +10,7 @@ import { DateTime } from "next-auth/providers/kakao";
 import RecordBox from "../ui/appointmentrecord/recordbox";
 import ChatModal from "../ui/chat/chatmodal";
 import dayjs from "dayjs";
+import CreateForm from "../ui/appointmentrecord/createform";
 
 type AppointmentData = {
   appointmentId: number,
@@ -66,8 +67,6 @@ export default function Page() {
           console.error("Cannot parse the email from the session");
           return;
         }
-
-        // Configure the API path based on the role
         const baseApi = "/api/appointmentrecord";
         let apiPath = "";
         if (role == "User") {
@@ -153,7 +152,7 @@ export default function Page() {
 
   const onClickChat = () => {
     openModal();
-}
+  }
 
   return (
     <div>
@@ -233,6 +232,9 @@ export default function Page() {
                 );
               })}
             </div>
+          )}
+          {filter == "" && (
+            <CreateForm />
           )}
           {filteredData.map((data, index) => (
             <RecordBox

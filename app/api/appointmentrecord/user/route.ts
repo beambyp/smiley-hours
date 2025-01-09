@@ -33,6 +33,7 @@ export async function GET(request: Request) {
             psychologistName: x.psychologistInfo.name + " " + x.psychologistInfo.surname,
             isCancel: x.isCancel,
             isSuccess: x.isSuccess,
+            symptom: x.symptom,
         })).sort((a, b) => {
             const dateA = new Date(a.appointmentDate);
             const dateB = new Date(b.appointmentDate);

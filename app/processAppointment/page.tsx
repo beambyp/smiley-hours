@@ -8,26 +8,28 @@ import Consentform from "../ui/component/consentform";
 import { useSession } from "next-auth/react";
 
 export default function Page() {
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
+    const role = session?.user.Role;
     {/* Navbar */ }
     let menuItems = [];
-    if (status === "authenticated" && session?.user) {
+    if (role == "User") {
         menuItems = [
             { href: "/home", label: "หน้าหลัก" },
             { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
-            { href: "/appointment", label: "นัดหมาย" },
-            { href: "/main", label: "ประวัติการรักษา" },
-            { href: "/article", label: "บทความ" },
-        ];
-    } else {
-        menuItems = [
-            { href: "/home", label: "หน้าหลัก" },
-            { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
-            { href: "/main", label: "แบบประเมินตนเอง" },
+            { href: "/appointmentrecord", label: "นัดหมาย" },
+            { href: "/medicalrecord", label: "ประวัติการรักษา" },
             { href: "/article", label: "บทความ" },
         ];
     }
-
+    else {
+        menuItems = [
+            { href: "/home", label: "หน้าหลัก" },
+            { href: "/scheduleD", label: "ตารางงาน" },
+            { href: "/appointmentrecord", label: "นัดหมาย" },
+            { href: "/result", label: "ผลวินิจฉัย" },
+            { href: "/medicalrecord", label: "ประวัติการรักษา" },
+        ];
+    }
     return (
         <div>
             <TopHeader />
@@ -41,6 +43,6 @@ export default function Page() {
             </main>
             <Footer />
         </div>
-  );
+    );
 }
 

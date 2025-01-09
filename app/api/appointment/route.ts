@@ -53,7 +53,7 @@ export async function POST(request: Request) {
                 psychologistEmail,
                 appointmentDate: appointmentDateISO,
                 consentFormID: null,
-                symptom: "",
+                symptom: symptom,
                 isCancel: false,
                 isSuccess: false,
                 isDiagnosis: false,

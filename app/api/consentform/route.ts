@@ -27,7 +27,19 @@ export async function POST(request: Request) {
                 dateSigned: now,
             },
         });
-        return new Response(JSON.stringify(consentForm), { status: 200 });
+        if(!consentForm){
+            throw new Error("Error creating consent form");
+        }
+        const updateAppointment = await prisma.appointmentRecord.update({
+            where: {
+              appointmentID: id,
+            },
+            data: {
+                consentFormID: consentForm.consentFormID,
+                isSuccess: true,
+            },
+          });
+        return new Response(JSON.stringify(updateAppointment), { status: 200 });
     } catch (error) {
         console.error("Error creating consent form:", error);
         return new Response(JSON.stringify({ error: "An error occurred while creating the consent form." }), { status: 500 });

@@ -4,6 +4,7 @@ import CancelModal from "./cancelmodal";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import RecordModal from "./recordmodal";
+import { useRouter } from "next/navigation";
 
 type AppointmentData = {
     appointmentId: number,
@@ -17,6 +18,7 @@ type AppointmentData = {
 const RecordBox: React.FC<AppointmentData> = ({ appointmentId, appointmentDate, Name, isCancel, symptom, status}) => {
     const { data: session } = useSession();
     const role = session?.user?.Role
+    const router = useRouter(); 
     const formattedDate = dayjs(appointmentDate).format("D MMMM YYYY");
     const formattedStartTime = dayjs(appointmentDate).format("HH.mm");
     const formattedEndTime = dayjs(appointmentDate).add(1, "hour").format("HH.mm");
@@ -52,7 +54,17 @@ const RecordBox: React.FC<AppointmentData> = ({ appointmentId, appointmentDate, 
     }
 
     const onClickHandleConsentForm = () => {
-        // Push the consent form component
+        const appointmentData = {
+            appointmentId,
+            appointmentDate: appointmentDate.toString(),
+            Name,
+            isCancel,
+            symptom,
+            status,
+        };
+        console.log("appointmentData before storing:", appointmentData);
+        localStorage.setItem("appointmentData", JSON.stringify(appointmentData));
+        router.push('/processAppointment');
     }
 
     const onClickButton = () => {
