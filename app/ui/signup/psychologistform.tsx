@@ -56,8 +56,8 @@ export default function PsychologistForm(){
     }
 
     return(
-        <div className="">
-        <h2 className= "font-akshar text-2xl md:text-3xl text-[#2B6EB0] mb-4 md:mb-6 ">Create Account</h2>
+        <div className="p-2">
+        <h2 className= "font-akshar text-2xl md:text-3xl text-[#2B6EB0] mt-10 md:mb-4 ">Create Account</h2>
         <p className="font-anuphan text-xl text-[#2B6EB0] mb-6">ผู้ให้คำปรึกษา</p>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -198,17 +198,17 @@ export default function PsychologistForm(){
           </div>
 
           <div className="md:col-span-2">
-          <div className="flex justify-around">
-            <label className="block text-[#2B6EB0] mb-2">สาขาที่เชี่ยวชาญ</label>
-              <label className="flex items-center space-x-2">
+          <div className="flex justify-between">
+            <label className="block text-[#2B6EB0] text-lg">สาขาที่เชี่ยวชาญ</label>
+              <label className="flex items-center space-x-1">
                 <input type="checkbox" onChange={(e) => setIsSpecializeChildAndTeen(e.target.checked)}className="w-4 h-4 text-blue-600" />
                 <span>เด็กและวัยรุ่น</span>
               </label>
-              <label className="flex items-center space-x-2">
+              <label className="flex items-center space-x-1">
               <input type="checkbox" onChange={(e) => setIsSpecializeAdult(e.target.checked)}className="w-4 h-4 text-blue-600" />
                 <span>ผู้ใหญ่</span>
               </label>
-              <label className="flex items-center space-x-2">
+              <label className="flex items-center space-x-1">
               <input type="checkbox" onChange={(e) => setIsSpecializeElder(e.target.checked)}className="w-4 h-4 text-blue-600" />
                 <span>สูงอายุ</span>
               </label>

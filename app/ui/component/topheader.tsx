@@ -51,7 +51,7 @@ export default function TopHeader() {
             <div className="flex justify-between items-center w-full px-4">
                 {/* Left Section */}
                 <div className="flex space-x-4 font-anuphan pl-4">
-                    <Link href="/main" className="hover:underline">
+                    <Link href="/home" className="hover:underline">
                         หน้าหลัก
                     </Link>
                     <span>|</span>

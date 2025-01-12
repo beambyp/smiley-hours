@@ -33,7 +33,7 @@ export async function POST(request: Request) {
                 symptom,
                 isCancel: false,
                 isSuccess: true,
-                isDiagnosis: true,
+                isDiagnosis: false,
                 createDate: now,
             }
         })

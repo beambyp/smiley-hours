@@ -17,6 +17,7 @@ interface AppointmentData {
 const Consentform: React.FC = () => {
   const { data: session } = useSession();
   const user = session?.user.email;
+  const role = session?.user.Role;
   const [appointmentData, setAppointmentData] = useState<AppointmentData | null>(null);
   useEffect(() => {
     const storedData = localStorage.getItem("appointmentData");
@@ -45,7 +46,7 @@ const Consentform: React.FC = () => {
     time: false,
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type, checked } = e.target as HTMLInputElement;
     setFormData((prevData) => ({
       ...prevData,
@@ -118,18 +119,35 @@ const Consentform: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+    let response;
+    const appointmentDate = dayjs(`${formData.date}T${formData.time}`).format("YYYY-MM-DDTHH:mm:ss");
     try {
-      const response = await fetch('/api/consentform', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: appointmentData?.appointmentId,
-          userEmail: user,
-        }),
-      });
-
+      if (appointmentData) {
+        response = await fetch('/api/consentform', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: appointmentData?.appointmentId,
+            userEmail: user,
+          }),
+        });
+      } else {
+        response = await fetch('/api/appointment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userEmail: user,
+            psychologistEmail: doctorEmail,
+            role: role,
+            appointmentDate: appointmentDate,
+            symptom: formData.symptoms,
+          })
+        });
+      }
       if (response.ok) {
         console.log('Consent Form created successfully');
         localStorage.clear();
@@ -169,6 +187,73 @@ const Consentform: React.FC = () => {
 
     return <span>{formattedDate}</span>;
   };
+
+  const [doctorTitle, setDoctorTitle] = useState("");
+  const [doctorEmail, setDoctorEmail] = useState("");
+  useEffect(() => {
+    // Retrieve data from localStorage
+    const title = localStorage.getItem("doctorTitle");
+    const email = localStorage.getItem("doctorEmail");
+    if (title) {
+      setDoctorTitle(title);
+    }
+    if (email) {
+      setDoctorEmail(email);
+    }
+  }, []);
+
+  const [availableSchedule, setAvailableSchedule] = useState<
+    { date: string; startTime: string; endTime: string }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      try {
+        const response = await fetch('/api/schedule/query', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            psychologistEmail: doctorEmail,
+          }),
+        });
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          const sortedData = data.sort((a, b) => {
+            const dateA = new Date(`${a.date}T${a.startTime}`);
+            const dateB = new Date(`${b.date}T${b.startTime}`);
+            return dateA.getTime() - dateB.getTime();
+          });
+          setAvailableSchedule(sortedData);
+          console.log(availableSchedule);
+        } else {
+          console.error('Failed to get schedule information');
+        }
+      } catch (error) {
+        console.error('An error occurred while getting the schedule:', error);
+      }
+    };
+    fetchSchedule();
+  }, [doctorEmail]);
+
+  console.log(availableSchedule);
+  console.log(formData);
+
+  function generateTimeSlots(startTime: string, endTime: string, interval: number) {
+    const start = new Date(`${formData.date}T${startTime}:00`);
+    const end = new Date(`${formData.date}T${endTime}:00`);
+    const timeSlots = [];
+
+    while (start <= end) {
+      const formattedTime = start.toLocaleTimeString('th-Th', { hour: '2-digit', minute: '2-digit' });
+      timeSlots.push(formattedTime);
+      start.setMinutes(start.getMinutes() + interval);
+    }
+
+    return timeSlots;
+  }
+
   return (
     <div className="bg-gray-100 p-6 max-h-6xl min-h-screen">
       {/* Step 1: แสดงเนื้อหาข้อตกลง */}
@@ -267,14 +352,32 @@ const Consentform: React.FC = () => {
                 <label className="block text-[#2B6EB0] font-anuphan font-medium text-lg mb-1">
                   วันที่ <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="date"
+                <select
                   name="date"
-                  value={formData.date}
+                  value={
+                    appointmentData?.appointmentDate
+                      ? dayjs(appointmentData.appointmentDate).format("YYYY-MM-DD")
+                      : formData.date
+                  }
                   onChange={handleInputChange}
-                  className={`w-full border ${errors.date ? "border-red-500" : "border-gray-300"
-                    } rounded-md p-2`}
-                />
+                  className={`w-full border ${errors.date ? "border-red-500" : "border-gray-300"} rounded-md p-2.5`}
+                  disabled={!!appointmentData?.appointmentDate || availableSchedule.length === 0}
+                >
+                  {availableSchedule.length === 0 ? (
+                    <option value="">No available schedule</option>
+                  ) : (
+                    <>
+                      <option value="" disabled hidden>
+                        Select a date
+                      </option>
+                      {availableSchedule.map((schedule, index) => (
+                        <option key={index} value={schedule.date}>
+                          {schedule.date}
+                        </option>
+                      ))}
+                    </>
+                  )}
+                </select>
               </div>
             </div>
             <button
@@ -308,6 +411,7 @@ const Consentform: React.FC = () => {
                   placeholder="--ชื่อ--"
                   className={`w-full border ${errors.firstName ? "border-red-500" : "border-gray-300"
                     } rounded-md p-2`}
+                  readOnly={true}
                 />
               </div>
               <div className="col-span-1 w-1/2">
@@ -330,14 +434,27 @@ const Consentform: React.FC = () => {
                 <label className="block text-[#2B6EB0] font-anuphan font-medium text-lg mb-1">
                   เวลา <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="time"
+                <select
                   name="time"
                   value={formData.time}
                   onChange={handleInputChange}
-                  className={`w-full border ${errors.date ? "border-red-500" : "border-gray-300"
-                    } rounded-md p-2`}
-                />
+                  className={`w-full border ${errors.date ? "border-red-500" : "border-gray-300"} rounded-md p-2.5`}
+                  disabled={!!appointmentData?.appointmentDate || availableSchedule.length === 0}
+                >
+                  {availableSchedule.length === 0 ? (
+                    <option value="">No available schedule</option>
+                  ) : (
+                    availableSchedule
+                      .filter(schedule => schedule.date === formData.date)
+                      .flatMap((schedule, scheduleIndex) =>
+                        generateTimeSlots(schedule.startTime, schedule.endTime, 30).map((timeSlot, timeSlotIndex) => (
+                          <option key={`${scheduleIndex}-${timeSlotIndex}-${timeSlot}`} value={timeSlot}>
+                            {timeSlot}
+                          </option>
+                        ))
+                      )
+                  )}
+                </select>
               </div>
               <div className="col-span-1 w-1/2">
                 <label className="block text-[#2B6EB0] font-anuphan font-medium text-lg mb-1">
@@ -346,7 +463,7 @@ const Consentform: React.FC = () => {
                 <input
                   type="date"
                   name="date"
-                  value={formData.date}
+                  value={appointmentData?.appointmentDate || formData.date}
                   onChange={handleInputChange}
                   className={`w-full border ${errors.date ? "border-red-500" : "border-gray-300"
                     } rounded-md p-2`}
@@ -385,12 +502,12 @@ const Consentform: React.FC = () => {
           <div className="bg-[#D1E3F6] p-10 rounded-md max-w-6xl mx-auto">
             <p className="font-anuphan text-2xl text-[#2B6EB0] font-semibold mb-10">
               <span>นักจิตวิทยา:</span>
-              <span className="font-normal"> {appointmentData?.Name || formData.firstName}</span>
+              <span className="font-normal"> {appointmentData?.Name || doctorTitle}</span>
             </p>
             <p className="font-anuphan text-2xl text-[#2B6EB0] font-semibold mb-10">
               <span>วันที่: </span>
               <span className="font-normal">
-                <DateDisplay date={appointmentData?.appointmentDate || formData.date + formData.lastName} />
+                <DateDisplay date={appointmentData?.appointmentDate || formData.date} />
               </span>
             </p>
             <p className="font-anuphan text-2xl text-[#2B6EB0] font-semibold mb-10">

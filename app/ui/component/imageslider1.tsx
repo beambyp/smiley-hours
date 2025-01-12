@@ -5,50 +5,46 @@ const photos = [
   "/slider1/slider1_2.jpg",
   "/slider1/slider1_3.jpg",
   "/slider1/slider1_4.jpg",
-  "/slider1/slider1_5.jpg",
-  "/slider1/slider1_6.jpg",
-  "/slider1/slider1_7.jpg",
-  "/slider1/slider1_8.jpg",
   "/slider1/slider1_9.jpg",
 ];
 
 export default function PhotoSlider() {
   const [current, setCurrent] = useState(0);
-  const delay = 6000; {/* delay time*/}
+  const delay = 6000; // delay time
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % photos.length); //loop next photo
+      setCurrent((prev) => (prev + 1) % photos.length); // loop next photo
     }, delay);
 
-    return () => clearInterval(interval); 
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="relative w-full h-[450px] overflow-hidden">
-      {/* photo */}
-        <div
-            className="flex transition-transform duration-1000" // smooth slider 
-            style={{
-                transform: `translateX(-${current * 100}%)`, 
-            }}
-        >
+    <div className="relative w-full h-[300px] md:h-[400px] lg:h-[450px] overflow-hidden">
+      {/* Photo */}
+      <div
+        className="flex transition-transform duration-1000"
+        style={{
+          transform: `translateX(-${current * 100}%)`,
+        }}
+      >
         {photos.map((photo, index) => (
           <img
             key={index}
             src={photo}
             alt={`Slide ${index + 1}`}
-            className="w-full h-full flex-shrink-0" //fit photo 
+            className="w-full h-full object-cover flex-shrink-0"
           />
         ))}
-    </div>
+      </div>
 
-    {/* position dot */}
-    <div className="absolute bottom-2 w-full flex justify-center space-x-2">
+      {/* Position Dots */}
+      <div className="absolute bottom-4 w-full flex justify-center space-x-2">
         {photos.map((_, index) => (
           <div
             key={index}
-            className={`w-2 h-2 border-2 rounded-full cursor-pointer ${
+            className={`w-1 h-1 md:w-2 md:h-2 border-2 rounded-full cursor-pointer ${
               index === current
                 ? "bg-white border-white"
                 : "bg-transparent border-white"
@@ -56,14 +52,14 @@ export default function PhotoSlider() {
             onClick={() => setCurrent(index)}
           ></div>
         ))}
-    </div>
+      </div>
 
-    {/* position photo */}
-    {/*}
-    <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded shadow text-gray-700">
+      {/* Optional Photo Counter */}
+      {/*}
+      <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded shadow text-gray-700 text-sm md:text-base">
         {`รูปที่ ${current + 1} จาก ${photos.length}`}
-    </div>
-    */}
+      </div>
+      */}
     </div>
   );
 }

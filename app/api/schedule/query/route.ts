@@ -6,9 +6,13 @@ const prisma = new PrismaClient();
 export async function POST(request: Request) { 
     try{
         const { psychologistEmail } = await request.json();
+        const now = new Date();
         const schedule = await prisma.psychologistShift.findMany({
             where: {
                 psychologistEmail: psychologistEmail,
+                availableDateStart: {
+                    gte: now,
+                },
             },
         })
         const tableData = schedule.map((shift) => {
