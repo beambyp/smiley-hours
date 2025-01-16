@@ -78,7 +78,7 @@ const RecordBox: React.FC<AppointmentData> = ({ appointmentId, appointmentDate, 
     if (status == "ยกเลิก" || isCancel) {
         return (
             <div className="flex justify-around bg-[#D9D9D9] p-4 rounded-lg shadow-md mb-4 h-14">
-                <div className="text-[#3C95EC] font-anuphan">{Name}</div>
+                <div className="text-[#3C95EC] font-anuphan w-1/4">{Name}</div>
                 <div className="text-[#3C95EC] font-anuphan">{formattedDate}</div>
                 <div className="text-[#3C95EC] font-anuphan">{formattedStartTime} - {formattedEndTime}</div>
             </div>
@@ -86,7 +86,7 @@ const RecordBox: React.FC<AppointmentData> = ({ appointmentId, appointmentDate, 
     }
     return (
             <div className="flex justify-around bg-[#9acafc] p-4 rounded-lg shadow-md mb-4 h-14">
-                <div className="text-white font-anuphan">{Name}</div>
+                <div className="text-white font-anuphan w-1/4">{Name}</div>
                 <div className="text-white font-anuphan">{formattedDate}</div>
                 <div className="text-white font-anuphan">{formattedStartTime} - {formattedEndTime}</div>
                 <div>

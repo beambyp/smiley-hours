@@ -26,6 +26,7 @@ export async function POST(request: Request) {
             });
             res = appointment.map(x => ({
                 appointmentDate: x.appointmentDate,
+                Email: x.psychologistEmail,
                 Name: x.psychologistInfo.name + " " + x.psychologistInfo.surname,
             }));
         }
@@ -45,6 +46,7 @@ export async function POST(request: Request) {
             });
             res = appointment.map(x => ({
                 appointmentDate: x.appointmentDate,
+                Email: x.userEmail,
                 Name: x.userInfo.name + " " + x.userInfo.surname,
             }));
         }

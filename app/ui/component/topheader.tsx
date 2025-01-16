@@ -8,6 +8,7 @@ import { DateTime } from 'next-auth/providers/kakao';
 
 type AppointmentData = {
     appointmentDate: DateTime,
+    Email: string,
     Name: string,
 };
 
@@ -32,6 +33,7 @@ export default function TopHeader() {
             if (Array.isArray(data)) {
                 const mappedData: AppointmentData[] = data.map((record) => ({
                     appointmentDate: record.appointmentDate,
+                    Email: record.Email,
                     Name: record.Name,
                 }));
                 setNotifications(mappedData);

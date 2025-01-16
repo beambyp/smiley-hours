@@ -4,6 +4,7 @@ import "./globals.css";
 import SessionProvider from './components/SessionProvider';
 import { getServerSession } from "next-auth";
 import type { Session } from "next-auth"
+import { ConvexClientProvider } from "./ConvexClientProvider";
 
 export const metadata: Metadata = {
   title: "Smiley Hours App",
@@ -28,7 +29,9 @@ export default async function RootLayout({
       <body
         className={`${montserrat.variable} ${akshar.variable} ${anuphan.variable} antialiased`}
       >
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <SessionProvider session={session}>
+          <ConvexClientProvider>{children}</ConvexClientProvider>
+        </SessionProvider>
       </body>
     </html>
   );
