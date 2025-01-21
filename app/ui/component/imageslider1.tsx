@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 const photos = [
-  "/slider1/slider1_1.jpg",
-  "/slider1/slider1_2.jpg",
+  "/slider1/slider1.1.jpg",
+  "/slider1/slider1.2.jpg",
   "/slider1/slider1_3.jpg",
   "/slider1/slider1_4.jpg",
-  "/slider1/slider1_9.jpg",
 ];
 
 export default function PhotoSlider() {
@@ -21,7 +20,7 @@ export default function PhotoSlider() {
   }, []);
 
   return (
-    <div className="relative w-full h-[300px] md:h-[400px] lg:h-[450px] overflow-hidden">
+    <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden">
       {/* Photo */}
       <div
         className="flex transition-transform duration-1000"

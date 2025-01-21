@@ -90,7 +90,7 @@ const ChatModal: React.FC<ModalProps> = ({ isOpen, onClose, name, email }) => {
                     >
                         <div className={`p-2 rounded-lg ${msg.senderEmail === session?.user?.email ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}>
                             <p>{msg.content}</p>
-                            <span className="text-xs">{dayjs(msg.timestamp).format("YYYY-MM-DD HH:MM")}</span>
+                            <span className="text-xs">{dayjs(msg.timestamp).format("YYYY-MM-DD HH:mm")}</span>
                         </div>
                     </div>
                 ))}
