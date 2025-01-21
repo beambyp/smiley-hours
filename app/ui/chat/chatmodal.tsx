@@ -54,6 +54,7 @@ const ChatModal: React.FC<ModalProps> = ({ isOpen, onClose, name, email }) => {
 
     console.log(chatID)
     const messages = useQuery(api.chat.getMessages, { chatID });
+    console.log(messages)
     const [message, setMessage] = useState("");
     const sendMessage = useMutation(api.chat.sendMessage);
     const handleSendMessage = async () => {
@@ -75,14 +76,14 @@ const ChatModal: React.FC<ModalProps> = ({ isOpen, onClose, name, email }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed top-20 right-20 z-10 w-96 max-h-[80vh] bg-[#BFDEFF] shadow-lg border-l border-gray-300 overflow-hidden rounded-lg">
+        <div className="fixed top-40 right-20 z-10 w-96 max-h-[60vh] bg-[#BFDEFF] shadow-lg border-l border-gray-300 overflow-hidden rounded-lg">
             <div className="p-4 bg-white text-white flex justify-center items-center">
                 <h2 className="text-lg font-bold text-center text-black">{name}</h2>
                 <button onClick={onClose} className="absolute top-4 right-3 text-xl font-bold text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#2B6EB0" d="m12 13.4l2.9 2.9q.275.275.7.275t.7-.275t.275-.7t-.275-.7L13.4 12l2.9-2.9q.275-.275.275-.7t-.275-.7t-.7-.275t-.7.275L12 10.6L9.1 7.7q-.275-.275-.7-.275t-.7.275t-.275.7t.275.7l2.9 2.9l-2.9 2.9q-.275.275-.275.7t.275.7t.7.275t.7-.275zm0 8.6q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8" /></svg>
                 </button>
             </div>
-            <div className="p-4 max-h-[calc(80vh-8rem)] overflow-y-auto">
+            <div className="p-4 max-h-[calc(60vh-8rem)] overflow-y-auto">
                 {messages?.map((msg) => (
                     <div
                         key={msg._id}

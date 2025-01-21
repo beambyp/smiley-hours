@@ -22,7 +22,7 @@ const ResultRecordBox: React.FC<MedicalData> = ({ AppointmentID,Name, symptom,tr
     };
     return (
         <div className="flex justify-around bg-[#9acafc] p-4 rounded-lg shadow-md mb-4 h-14">
-            <div className="text-white font-anuphan">{Name}</div>
+            <div className="text-white font-anuphan w-1/4">{Name}</div>
             <div className="text-white font-anuphan">{treatmentDate}</div>
             <div className="text-white font-anuphan">{treatmentStartTime} - {treatmentEndTime}</div>
             <div>

@@ -26,6 +26,55 @@ const Consentform: React.FC = () => {
       console.log(appointmentData);
     }
   }, []);
+  const [doctorTitle, setDoctorTitle] = useState("");
+  const [doctorEmail, setDoctorEmail] = useState("");
+  useEffect(() => {
+    // Retrieve data from localStorage
+    const title = localStorage.getItem("doctorTitle");
+    const email = localStorage.getItem("doctorEmail");
+    if (title) {
+      setDoctorTitle(title);
+    }
+    if (email) {
+      setDoctorEmail(email);
+    }
+  }, []);
+  
+  const [availableSchedule, setAvailableSchedule] = useState<
+    { date: string; startTime: string; endTime: string }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      try {
+        console.log(doctorEmail)
+        const response = await fetch('/api/schedule/query', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            psychologistEmail: doctorEmail,
+          }),
+        });
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          const sortedData = data.sort((a, b) => {
+            const dateA = new Date(`${a.date}T${a.startTime}`);
+            const dateB = new Date(`${b.date}T${b.startTime}`);
+            return dateA.getTime() - dateB.getTime();
+          });
+          setAvailableSchedule(sortedData);
+          console.log(availableSchedule);
+        } else {
+          console.error('Failed to get schedule information');
+        }
+      } catch (error) {
+        console.error('An error occurred while getting the schedule:', error);
+      }
+    };
+    fetchSchedule();
+  }, [doctorEmail]);
 
   const [step, setStep] = useState(1); // จัดการสถานะของขั้นตอน
   const [formData, setFormData] = useState({
@@ -150,10 +199,12 @@ const Consentform: React.FC = () => {
       }
       if (response.ok) {
         console.log('Consent Form created successfully');
-        localStorage.clear();
+        localStorage.removeItem('doctorEmail');
+        localStorage.removeItem('doctorTitle');
+        localStorage.removeItem('appointmentData');
         setStep(4);
       } else {
-        console.error('Failed to create ccnsent form');
+        console.error('Failed to create consent form');
       }
     } catch (error) {
       console.error('An error occurred while creating the consent form:', error);
@@ -187,58 +238,6 @@ const Consentform: React.FC = () => {
 
     return <span>{formattedDate}</span>;
   };
-
-  const [doctorTitle, setDoctorTitle] = useState("");
-  const [doctorEmail, setDoctorEmail] = useState("");
-  useEffect(() => {
-    // Retrieve data from localStorage
-    const title = localStorage.getItem("doctorTitle");
-    const email = localStorage.getItem("doctorEmail");
-    if (title) {
-      setDoctorTitle(title);
-    }
-    if (email) {
-      setDoctorEmail(email);
-    }
-  }, []);
-
-  const [availableSchedule, setAvailableSchedule] = useState<
-    { date: string; startTime: string; endTime: string }[]
-  >([]);
-
-  useEffect(() => {
-    const fetchSchedule = async () => {
-      try {
-        const response = await fetch('/api/schedule/query', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            psychologistEmail: doctorEmail,
-          }),
-        });
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          const sortedData = data.sort((a, b) => {
-            const dateA = new Date(`${a.date}T${a.startTime}`);
-            const dateB = new Date(`${b.date}T${b.startTime}`);
-            return dateA.getTime() - dateB.getTime();
-          });
-          setAvailableSchedule(sortedData);
-          console.log(availableSchedule);
-        } else {
-          console.error('Failed to get schedule information');
-        }
-      } catch (error) {
-        console.error('An error occurred while getting the schedule:', error);
-      }
-    };
-    fetchSchedule();
-  }, [doctorEmail]);
-
-  console.log(availableSchedule);
-  console.log(formData);
 
   function generateTimeSlots(startTime: string, endTime: string, interval: number) {
     const start = new Date(`${formData.date}T${startTime}:00`);

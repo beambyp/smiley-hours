@@ -34,7 +34,7 @@ const Modal: React.FC<ModalProps> = ({
 
   const handleClick = () => {
     if (status === "authenticated" && session?.user) {
-      localStorage.clear();
+      //localStorage.clear();
       // Save data to localStorage
       localStorage.setItem("doctorTitle", title);
       localStorage.setItem("doctorEmail", email);

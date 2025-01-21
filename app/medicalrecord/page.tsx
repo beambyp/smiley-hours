@@ -19,16 +19,17 @@ type MedicalData = {
 };
 
 export default function Page() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   if (status != "authenticated") {
     router.push("/signin")
   }
-  const user = session?.user?.email;
-  const role = session?.user?.Role
+  //const user = session?.user?.email;
+  const user = localStorage.getItem("email");
+  const role = localStorage.getItem("role");
   {/* Navbar */ }
   let menuItems = [];
-  if (session?.user.Role == "User") {
+  if (role == "User") {
     menuItems = [
       { href: "/home", label: "หน้าหลัก" },
       { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },

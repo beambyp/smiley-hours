@@ -29,8 +29,9 @@ type AppointmentDataNow = {
 
 export default function Page() {
   const { data: session, status } = useSession();
-  const user = session?.user.email;
-  const role = session?.user.Role;
+  //const user = session?.user.email;
+  const user = localStorage.getItem("email");
+  const role = localStorage.getItem("role");
   const router = useRouter();
   if (status != "authenticated") {
     router.push("/signin")
