@@ -27,8 +27,8 @@ export default function Page() {
             </div>
 
             {/* Right Section: Form */}
-            <div className="flex w-full md:w-1/2 h-full bg-white p-8 items-center justify-center">
-                <div className="max-w-lg w-full">
+            <div className="flex w-full md:w-1/2 h-full bg-white p-8 items-center justify-center overflow-y-auto">
+                <div className="max-w-lg w-full space-y-6"> 
                     {!selectedRole ? (
                         <SelectRole onSelect={handleRoleSelect} />
                     ) : selectedRole === "patient" ? (

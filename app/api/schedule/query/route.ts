@@ -10,9 +10,12 @@ export async function POST(request: Request) {
         const schedule = await prisma.psychologistShift.findMany({
             where: {
                 psychologistEmail: psychologistEmail,
-                availableDateStart: {
-                    gte: now,
-                },
+                // availableDateStart: {
+                //     gte: now,
+                // },
+                availableDateEnd:{
+                    gte: now
+                }
             },
         })
         const tableData = schedule.map((shift) => {

@@ -5,11 +5,11 @@ import Navbar from "../ui/component/navbar";
 import ImageSlider1 from "../ui/component/imageslider1";
 import Footer from "../ui/component/footer";
 import Consentform from "../ui/component/consentform";
-import { useSession } from "next-auth/react";
 
 export default function Page() {
-    const { data: session } = useSession();
-    const role = session?.user.Role;
+    //const { data: session } = useSession();
+    //const email = localStorage.getItem("email");
+    const role = localStorage.getItem("role");
     {/* Navbar */ }
     let menuItems = [];
     if (role == "User") {

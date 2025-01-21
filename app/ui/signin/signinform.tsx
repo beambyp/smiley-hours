@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { getSession } from "next-auth/react";
 
 export default function SignInForm() {
     const [email, setEmail] = useState("");
+    const [error, setError] = useState("")
     const [password, setPassword] = useState("");
     const router = useRouter();
 
@@ -18,7 +20,17 @@ export default function SignInForm() {
 
         if (res?.error) {
             console.log(res.error);
+            setError("Invalid Email or Password")
             return false;
+        }
+        const session = await getSession();
+        if (session?.user) {
+            if (session.user.email) {
+                localStorage.setItem("email", session.user.email);
+            }
+            if (session.user.Role) {
+                localStorage.setItem("role", session.user.Role);
+            }
         }
 
         router.push("/home");
@@ -104,6 +116,7 @@ export default function SignInForm() {
                     Create Account
                 </a>
             </p>
+            {error && <p style={{ color: 'red'}}>{error}</p>}
         </div>
     );
 }

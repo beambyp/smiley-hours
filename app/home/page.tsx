@@ -11,9 +11,11 @@ import { useSession } from "next-auth/react";
 
 export default function Page() {
     const { data: session, status } = useSession();
+    //const email = localStorage.getItem("email");
+    const role = localStorage.getItem("role");
     {/* Navbar */ }
     let menuItems = [];
-    if (status === "authenticated" && session?.user.Role == "User") {
+    if (status === "authenticated" && role == "User") {
         menuItems = [
             { href: "/home", label: "หน้าหลัก" },
             { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
@@ -22,7 +24,7 @@ export default function Page() {
             { href: "/article", label: "บทความ" },
         ];
     }
-    else if (status === "authenticated" && session?.user.Role == "Psychologist") {
+    else if (status === "authenticated" && role == "Psychologist") {
         menuItems = [
             { href: "/home", label: "หน้าหลัก" },
             { href: "/scheduleD", label: "ตารางงาน" },
@@ -86,7 +88,7 @@ export default function Page() {
     ];
 
     const handleButton = () => {
-        if (status === "authenticated" && session?.user.Role == "User" || status === "unauthenticated") {
+        if (status === "authenticated" && role == "User" || status === "unauthenticated") {
             return (
                 <div className="mt-16 flex flex-col">
                     <Link href="/appointmentrecord">
@@ -107,7 +109,7 @@ export default function Page() {
                 </div>
             )
         }
-        else if (status === "authenticated" && session?.user.Role == "Psychologist") {
+        else if (status === "authenticated" && role == "Psychologist") {
             return (
                 <div className="mt-16 flex flex-col">
                     <Link href="/scheduleD">
