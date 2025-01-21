@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation'
 
 export default function PsychologistForm() {
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")
   const [dateOfBirth, setBirth] = useState("")
@@ -22,6 +24,22 @@ export default function PsychologistForm() {
 
   const router = useRouter()
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const validTypes = ["image/png", "image/jpeg"];
+      if (!validTypes.includes(file.type)) {
+        setError("Only PNG and JPEG files are allowed.");
+        setProfileImage(null);
+        setPreviewImage(null);
+        return;
+      }
+      setError("");
+      setProfileImage(file);
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -32,15 +50,18 @@ export default function PsychologistForm() {
     } else if (confirmPassword !== password) {
       setError("Password and Confirm Password do not match.");
       console.log(error);
-      return 
+      return
     } else {
-      setError(""); 
+      setError("");
       console.log("Passwords are valid and match.");
     }
 
+    console.log("Profile Image:", profileImage);
+    console.log("Other Fields:", { name, surname, dateOfBirth });
     console.log(name)
     console.log(surname)
     console.log(dateOfBirth)
+
     try {
       const res = await fetch("/api/signup/psychologist", {
         method: "POST",
@@ -48,7 +69,7 @@ export default function PsychologistForm() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          name, surname, dateOfBirth, gender, phoneNumber, citizenID, licenseNumber, address, workplace, specialization, isSpecializeAdult, isSpecializeChildAndTeen, isSpecializeElder, email, password
+          name, surname, dateOfBirth, gender, phoneNumber, citizenID, licenseNumber, address, workplace, specialization, isSpecializeAdult, isSpecializeChildAndTeen, isSpecializeElder, email, password, profileImage
         })
       })
       if (res.ok) {
@@ -64,10 +85,49 @@ export default function PsychologistForm() {
   }
 
   return (
-    <div className="p-2">
-      <h2 className="font-akshar text-2xl md:text-3xl text-[#2B6EB0] mt-10 md:mb-4 ">Create Account</h2>
-      <p className="font-anuphan text-xl text-[#2B6EB0] mb-6">ผู้ให้คำปรึกษา</p>
+    <div className="flex p-2 flex-col gap-2 ">
+      <h2 className="font-akshar text-2xl md:text-3xl text-[#2B6EB0] mt-32 md:mb-2">Create Account</h2>
+      <p className="font-anuphan text-xl text-[#2B6EB0] mb-4">ผู้ให้คำปรึกษา</p>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="md:col-span-2 flex items-center gap-4">
+          <div className="flex flex-col">
+            <label htmlFor="profileImage" className="block text-sm font-medium text-[#2B6EB0] mb-2">
+              รูปโปรไฟล์ (PNG, JPEG เท่านั้น) <span className="font-anuphan text-red-500">*</span>
+            </label>
+            <input
+              type="file"
+              id="profileImage"
+              accept="image/*"
+              className="block text-sm text-[#2B6EB0] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#2B6EB0] hover:file:bg-blue-100"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setProfileImage(e.target.files[0]);
+                }
+              }}
+            />
+          </div>
+          {profileImage && (
+            <div className="relative">
+              <img
+                src={URL.createObjectURL(profileImage)}
+                alt="Profile Preview"
+                className="block mt-4 w-24 h-24 rounded-full object-cover"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setProfileImage(null);
+                  setPreviewImage(null);
+                }}
+                className="absolute top-0 right-0 bg-red-500 text-white w-4 h-4 rounded-full flex items-center justify-center text-xs font-bold hover:bg-red-700"
+                title="ลบรูป"
+              >
+                ×
+              </button>
+            </div>
+
+          )}
+        </div>
         <div>
           <label className="block text-sm font-medium text-[#2B6EB0]">
             ชื่อ <span className="font-anuphan text-red-500">*</span>
@@ -137,7 +197,7 @@ export default function PsychologistForm() {
         </div>
         <div>
           <label className="block text-sm font-medium text-[#2B6EB0]">
-            Email <span className="text-red-500">*</span>
+            Email <span className="font-anuphan text-red-500">*</span>
           </label>
           <input
             type="email"
