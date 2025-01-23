@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 export default function PsychologistForm() {
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")
   const [dateOfBirth, setBirth] = useState("")
@@ -25,18 +26,28 @@ export default function PsychologistForm() {
   const router = useRouter()
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files?.[0]; // ตรวจสอบว่ามีไฟล์หรือไม่
     if (file) {
       const validTypes = ["image/png", "image/jpeg"];
-      if (!validTypes.includes(file.type)) {
+      if (!validTypes.includes(file.type)) { // ตรวจสอบประเภทไฟล์
         setError("Only PNG and JPEG files are allowed.");
         setProfileImage(null);
         setPreviewImage(null);
         return;
       }
-      setError("");
-      setProfileImage(file);
-      setPreviewImage(URL.createObjectURL(file));
+      setError(""); // ล้าง error
+      setProfileImage(file); // ตั้งค่าไฟล์
+      setPreviewImage(URL.createObjectURL(file)); // สร้าง URL เพื่อแสดงตัวอย่าง
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setProfileImage(null);
+    setPreviewImage(null);
+
+    // รีเซ็ตค่าของ input file
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // ล้างค่า input file
     }
   };
 
@@ -91,34 +102,31 @@ export default function PsychologistForm() {
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="md:col-span-2 flex items-center gap-4">
           <div className="flex flex-col">
-            <label htmlFor="profileImage" className="block text-sm font-medium text-[#2B6EB0] mb-2">
+            <label
+              htmlFor="profileImage"
+              className="block text-sm font-medium text-[#2B6EB0] mb-2"
+            >
               รูปโปรไฟล์ (PNG, JPEG เท่านั้น) <span className="font-anuphan text-red-500">*</span>
             </label>
             <input
               type="file"
               id="profileImage"
               accept="image/*"
+              ref={fileInputRef} //useRef for file input
               className="block text-sm text-[#2B6EB0] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#2B6EB0] hover:file:bg-blue-100"
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  setProfileImage(e.target.files[0]);
-                }
-              }}
+              onChange={handleImageChange}
             />
           </div>
           {profileImage && (
             <div className="relative">
               <img
-                src={URL.createObjectURL(profileImage)}
+                src={previewImage || ""}
                 alt="Profile Preview"
-                className="block mt-4 w-24 h-24 rounded-full object-cover"
+                className="w-[4.5rem] h-[4.5rem] rounded-full object-cover"
               />
               <button
                 type="button"
-                onClick={() => {
-                  setProfileImage(null);
-                  setPreviewImage(null);
-                }}
+                onClick={handleRemoveImage}
                 className="absolute top-0 right-0 bg-red-500 text-white w-4 h-4 rounded-full flex items-center justify-center text-xs font-bold hover:bg-red-700"
                 title="ลบรูป"
               >
@@ -327,3 +335,5 @@ export default function PsychologistForm() {
     </div>
   );
 };
+import { useRef } from "react";
+
