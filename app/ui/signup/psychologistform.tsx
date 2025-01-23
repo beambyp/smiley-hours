@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
+import { upload } from '@vercel/blob/client'
 
 export default function PsychologistForm() {
-  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [fileImage, setFileImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")
@@ -21,21 +22,23 @@ export default function PsychologistForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("")
+  const [blobUrl, setBlobUrl] = useState("")
 
   const router = useRouter()
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const validTypes = ["image/png", "image/jpeg"];
       if (!validTypes.includes(file.type)) {
         setError("Only PNG and JPEG files are allowed.");
-        setProfileImage(null);
+        setFileImage(null);
         setPreviewImage(null);
+        console.log(previewImage);
         return;
       }
       setError("");
-      setProfileImage(file);
+      setFileImage(file);
       setPreviewImage(URL.createObjectURL(file));
     }
   };
@@ -56,11 +59,31 @@ export default function PsychologistForm() {
       console.log("Passwords are valid and match.");
     }
 
-    console.log("Profile Image:", profileImage);
+    console.log("Profile Image:", fileImage);
     console.log("Other Fields:", { name, surname, dateOfBirth });
     console.log(name)
     console.log(surname)
-    console.log(dateOfBirth)
+    console.log(dateOfBirth)    
+    if (fileImage) {
+      try {
+        const blob = await upload(fileImage.name, fileImage, {
+          access: 'public',
+          handleUploadUrl: '/api/upload',
+          onUploadProgress: () => {
+            //setProgress(progressEvent.percentage)
+          },
+        })
+        console.log("Uploaded file is available at:", blob.url)
+        setBlobUrl(blob.url)
+        console.log("blob", blobUrl);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message)
+        } else {
+          throw error
+        }
+      }
+    }
 
     try {
       const res = await fetch("/api/signup/psychologist", {
@@ -69,7 +92,7 @@ export default function PsychologistForm() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          name, surname, dateOfBirth, gender, phoneNumber, citizenID, licenseNumber, address, workplace, specialization, isSpecializeAdult, isSpecializeChildAndTeen, isSpecializeElder, email, password, profileImage
+          name, surname, dateOfBirth, gender, phoneNumber, citizenID, licenseNumber, address, workplace, specialization, isSpecializeAdult, isSpecializeChildAndTeen, isSpecializeElder, email, password, psychologistPhoto: blobUrl
         })
       })
       if (res.ok) {
@@ -83,7 +106,6 @@ export default function PsychologistForm() {
       console.log(error)
     }
   }
-
   return (
     <div className="flex p-2 flex-col gap-2 ">
       <h2 className="font-akshar text-2xl md:text-3xl text-[#2B6EB0] mt-32 md:mb-2">Create Account</h2>
@@ -101,22 +123,23 @@ export default function PsychologistForm() {
               className="block text-sm text-[#2B6EB0] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#2B6EB0] hover:file:bg-blue-100"
               onChange={(e) => {
                 if (e.target.files && e.target.files[0]) {
-                  setProfileImage(e.target.files[0]);
+                  setFileImage(e.target.files[0]);
+                  handleImageChange(e);
                 }
               }}
             />
           </div>
-          {profileImage && (
+          {fileImage && (
             <div className="relative">
               <img
-                src={URL.createObjectURL(profileImage)}
+                src={URL.createObjectURL(fileImage)}
                 alt="Profile Preview"
                 className="block mt-4 w-24 h-24 rounded-full object-cover"
               />
               <button
                 type="button"
                 onClick={() => {
-                  setProfileImage(null);
+                  setFileImage(null);
                   setPreviewImage(null);
                 }}
                 className="absolute top-0 right-0 bg-red-500 text-white w-4 h-4 rounded-full flex items-center justify-center text-xs font-bold hover:bg-red-700"
@@ -125,7 +148,6 @@ export default function PsychologistForm() {
                 ×
               </button>
             </div>
-
           )}
         </div>
         <div>
