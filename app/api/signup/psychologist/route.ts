@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
     try {
-        const {name,surname,dateOfBirth,gender,phoneNumber,citizenID,licenseNumber,address,workplace,specialization,isSpecializeAdult,isSpecializeChildAndTeen,isSpecializeElder,email,password } = await request.json();
+        const {name,surname,dateOfBirth,gender,phoneNumber,citizenID,licenseNumber,address,workplace,specialization,isSpecializeAdult,isSpecializeChildAndTeen,isSpecializeElder,email,password,psychologistPhoto } = await request.json();
         const Role = "Psychologist";
         const isApprove = false; //Approve Manual by Admin
 
@@ -41,6 +41,7 @@ export async function POST(request: Request) {
                 isSpecializeChildAndTeen,
                 isSpecializeElder,
                 licenseNumber,
+                psychologistPhoto,
             },
         });
         return new Response(JSON.stringify(newAccount), { status: 201 });
