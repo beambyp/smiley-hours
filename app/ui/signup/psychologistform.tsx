@@ -23,7 +23,6 @@ export default function PsychologistForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("")
-  const [blobUrl, setBlobUrl] = useState("")
 
   const router = useRouter()
 
@@ -49,40 +48,38 @@ export default function PsychologistForm() {
 
     if (password.length < 8) {
       setError("Password must be at least 8 characters long.");
-      console.log(error);
-      return
+      return;
     } else if (confirmPassword !== password) {
       setError("Password and Confirm Password do not match.");
-      console.log(error);
-      return
+      return;
     } else {
       setError("");
-      console.log("Passwords are valid and match.");
     }
 
     console.log("Profile Image:", fileImage);
     console.log("Other Fields:", { name, surname, dateOfBirth });
-    console.log(name)
-    console.log(surname)
-    console.log(dateOfBirth)    
+
+    let psychologistPhoto = null;
+
     if (fileImage) {
       try {
         const blob = await upload(fileImage.name, fileImage, {
           access: 'public',
           handleUploadUrl: '/api/upload',
           onUploadProgress: () => {
-            //setProgress(progressEvent.percentage)
+            // setProgress(progressEvent.percentage);
           },
-        })
-        console.log("Uploaded file is available at:", blob.url)
-        setBlobUrl(blob.url)
-        console.log("blob", blobUrl);
+        });
+        console.log("Uploaded file is available at:", blob.url);
+        psychologistPhoto = blob.url; 
+        console.log("psychologistPhoto:", psychologistPhoto);
       } catch (error) {
         if (error instanceof Error) {
-          console.error(error.message)
+          console.error(error.message);
         } else {
-          throw error
+          throw error;
         }
+        return; 
       }
     }
 
@@ -90,23 +87,39 @@ export default function PsychologistForm() {
       const res = await fetch("/api/signup/psychologist", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name, surname, dateOfBirth, gender, phoneNumber, citizenID, licenseNumber, address, workplace, specialization, isSpecializeAdult, isSpecializeChildAndTeen, isSpecializeElder, email, password, psychologistPhoto: blobUrl
-        })
-      })
+          name,
+          surname,
+          dateOfBirth,
+          gender,
+          phoneNumber,
+          citizenID,
+          licenseNumber,
+          address,
+          workplace,
+          specialization,
+          isSpecializeAdult,
+          isSpecializeChildAndTeen,
+          isSpecializeElder,
+          email,
+          password,
+          psychologistPhoto, 
+        }),
+      });
+
       if (res.ok) {
-        router.push('/signin')
-      }
-      else {
-        setError("Error registeration")
+        router.push("/signin");
+      } else {
+        setError("Error registration");
       }
     } catch (error) {
-      setError("Password and Confirm Password do not match.")
-      console.log(error)
+      console.error(error);
+      setError("An unexpected error occurred.");
     }
-  }
+  };
+
   return (
     <div className="flex p-2 flex-col gap-2 ">
       <h2 className="font-akshar text-2xl md:text-3xl text-[#2B6EB0] mt-32 md:mb-2">Create Account</h2>
@@ -127,6 +140,7 @@ export default function PsychologistForm() {
               ref={fileInputRef} //useRef for file input
               className="block text-sm text-[#2B6EB0] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#2B6EB0] hover:file:bg-blue-100"
               onChange={(e) => {
+                handleImageChange(e);
                 if (e.target.files && e.target.files[0]) {
                   setFileImage(e.target.files[0]);
                 }

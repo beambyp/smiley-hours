@@ -11,7 +11,6 @@ export async function POST(request: Request) {
         const existingUser = await prisma.userAccount.findUnique({
             where: { email },
         });
-        let hashPassword;
         if (existingUser) {
             // Compare the old password with the stored hashed password
             const isPasswordCorrect = await bcrypt.compare(oldPassword, existingUser.password);

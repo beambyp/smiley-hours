@@ -43,8 +43,7 @@ export default function PsychologistAccount() {
   const [oldPassword, setoldPassword] = useState("")
   const [newPassword, setnewPassword] = useState("")
   const [error, setError] = useState("")
-  const [recordData, setRecordData] = useState<PsychologistInfoData>();  
-  const [blobUrl, setBlobUrl] = useState("")
+  const [recordData, setRecordData] = useState<PsychologistInfoData>();
   const router = useRouter()
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,40 +87,50 @@ export default function PsychologistAccount() {
     console.log(surname)
     console.log(dateOfBirth)
 
+    let psychologistPhoto = null;
     if (profileImage) {
       try {
         const blob = await upload(profileImage.name, profileImage, {
           access: 'public',
           handleUploadUrl: '/api/upload',
           onUploadProgress: () => {
-            // setProgress(progressEvent.percentage)
+            //setProgress(progressEvent.percentage)
           },
-        });
+        })
         console.log("Uploaded file is available at:", blob.url);
-    
-        // Directly use blob.url in the fetch request
-        const res = await fetch("/api/signup/psychologist", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            name, surname, dateOfBirth, gender, phoneNumber, citizenID, licenseNumber, address, workplace, specialization,
-            isSpecializeAdult, isSpecializeChildAndTeen, isSpecializeElder, email, oldPassword, newPassword, psychologistPhoto: blob.url // Use the URL directly
-          })
-        });
-    
-        if (res.ok) {
-          router.push('/signin');
-        } else {
-          setError("Error registration");
-        }
+        psychologistPhoto = blob.url; 
+        console.log("psychologistPhoto:", psychologistPhoto);
       } catch (error) {
-        setError("Password and Confirm Password do not match.");
-        console.log(error);
+        if (error instanceof Error) {
+          console.error(error.message)
+        } else {
+          throw error
+        }
       }
     }
-  }
+
+    try {
+      const res = await fetch("/api/profile/command/psychologist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name, surname, dateOfBirth, gender, phoneNumber, citizenID, licenseNumber, address, workplace, specialization,
+          isSpecializeAdult, isSpecializeChildAndTeen, isSpecializeElder, email, oldPassword, newPassword, psychologistPhoto 
+        })
+      })
+      if (res.ok) {
+        router.push('/home')
+      }
+      else {
+        setError("Error registeration")
+      }
+    } catch (error) {
+      setError("Password and Confirm Password do not match.")
+      console.log(error)
+    }
+  };
   useEffect(() => {
     async function fetchAccountInfo() {
       try {
@@ -154,6 +163,9 @@ export default function PsychologistAccount() {
           setIsSpecializeElder(data.isSpecializeElder);
           setEmail(data.email);
           setProfileImage(data.psychologistPhoto);
+          if (data.psychologistPhoto) {
+            setPreviewImage(data.psychologistPhoto);
+          }
         }
       } catch (error) {
         console.error("Error fetching account info:", error);
@@ -161,12 +173,10 @@ export default function PsychologistAccount() {
     }
     fetchAccountInfo();
   }, [emailuser, role]);
-
-  console.log(recordData)
   return (
-    <div className="comtainer flex p-2 flex-col gap-2 ">
+    <div className="comtainer flex p-10 flex-col gap-2 justify-around">
       <h2 className="font-akshar text-2xl md:text-3xl text-[#2B6EB0] md:mb-2">Psychologist Account Preferences</h2>
-      <h2 className="font-akshar text-2xl md:text-xl text-[#2B6EB0] md:mb-2">ตั้งค่าข้อมูลส่วนตัว</h2>
+      <h2 className="font-anuphan text-2xl md:text-xl text-[#2B6EB0] md:mb-2">ตั้งค่าข้อมูลส่วนตัว</h2>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="md:col-span-2 flex items-center gap-4">
           <div className="flex flex-col">
