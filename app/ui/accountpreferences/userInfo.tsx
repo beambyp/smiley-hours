@@ -23,6 +23,7 @@ export default function UserAccount() {
     const [oldPassword, setoldPassword] = useState("")
     const [newPassword, setnewPassword] = useState("")
     const router = useRouter()
+    
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -203,6 +204,7 @@ export default function UserAccount() {
                 <button
                     type="submit"
                     className="font-akshar mt-4 w-full bg-[#2B6EB0] text-white font-xl py-2 rounded-md hover:bg-gray-400 transition"
+                    onClick={handleSubmit}
                 >
                     Update
                 </button>

@@ -11,7 +11,6 @@ export default function Page() {
     const [role, setRole] = useState<string | null>(null);
 
     useEffect(() => {
-        // ดึง role จาก localStorage เมื่อ component โหลด
         const storedRole = localStorage.getItem("role");
         setRole(storedRole);
     }, []);
@@ -19,34 +18,40 @@ export default function Page() {
     const menuItems =
         role === "User"
             ? [
-                  { href: "/home", label: "หน้าหลัก" },
-                  { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
-                  { href: "/appointmentrecord", label: "นัดหมาย" },
-                  { href: "/medicalrecord", label: "ประวัติการรักษา" },
-                  { href: "/article", label: "บทความ" },
-              ]
+                { href: "/home", label: "หน้าหลัก" },
+                { href: "/selectDoc", label: "ผู้ให้คำปรึกษา" },
+                { href: "/appointmentrecord", label: "นัดหมาย" },
+                { href: "/medicalrecord", label: "ประวัติการรักษา" },
+                { href: "/article", label: "บทความ" },
+            ]
             : [
-                  { href: "/home", label: "หน้าหลัก" },
-                  { href: "/scheduleD", label: "ตารางงาน" },
-                  { href: "/appointmentrecord", label: "นัดหมาย" },
-                  { href: "/result", label: "ผลวินิจฉัย" },
-                  { href: "/medicalrecord", label: "ประวัติการรักษา" },
-              ];
+                { href: "/home", label: "หน้าหลัก" },
+                { href: "/scheduleD", label: "ตารางงาน" },
+                { href: "/appointmentrecord", label: "นัดหมาย" },
+                { href: "/result", label: "ผลวินิจฉัย" },
+                { href: "/medicalrecord", label: "ประวัติการรักษา" },
+            ];
 
     const renderAccountPage = () => {
         if (role === "User") {
             return <UserAccount />;
         } else if (role === "Psychologist") {
             return <PsychologistAccount />;
-        } 
+        }
+        return null; // default fallback
     };
+
+    // แสดง loader ระหว่างรอ role
+    if (role === null) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div>
             <TopHeader />
             <Navbar menuItems={menuItems} />
             <main className="container bg-foreground mx-auto py-10 shadow-2xl">
-                {renderAccountPage()}
+                {role && renderAccountPage()}
             </main>
             <Footer />
         </div>
