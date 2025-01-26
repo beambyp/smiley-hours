@@ -11,10 +11,11 @@ export async function POST(request: Request) {
         const existingUser = await prisma.userAccount.findUnique({
             where: { email },
         });
-        let hashPassword;
         if (existingUser) {
-            hashPassword = await bcrypt.hash(oldPassword, 10);
-            if(hashPassword != existingUser.password){
+            // Compare the old password with the stored hashed password
+            const isPasswordCorrect = await bcrypt.compare(oldPassword, existingUser.password);
+                    
+            if (!isPasswordCorrect) {
                 return new Response(JSON.stringify({ error: "The password is incorrect." }), { status: 400 });
             }
         }
