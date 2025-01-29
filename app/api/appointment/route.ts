@@ -26,6 +26,10 @@ export async function POST(request: Request) {
                 dateSigned: nowISO,
             },
         });
+
+        if (!consentForm) {
+            throw new Error("Failed to create consent form");
+        }
         appointmentRecord = await prisma.appointmentRecord.create({
             data:{
                 userEmail,

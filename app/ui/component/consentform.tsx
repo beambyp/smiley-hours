@@ -425,6 +425,7 @@ const Consentform: React.FC = () => {
                   placeholder="--นามสกุล--"
                   className={`w-full border ${errors.lastName ? "border-red-500" : "border-gray-300"
                     } rounded-md p-2`}
+                  readOnly={true}
                 />
               </div>
             </div>
@@ -466,6 +467,7 @@ const Consentform: React.FC = () => {
                   onChange={handleInputChange}
                   className={`w-full border ${errors.date ? "border-red-500" : "border-gray-300"
                     } rounded-md p-2`}
+                  readOnly={true}
                 />
               </div>
             </div>
