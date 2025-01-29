@@ -36,14 +36,16 @@ export async function GET(request: Request) {
                     month: "long",
                     year: "numeric",
                 }), 
-                treatmentStartTime: availableDateStart.toLocaleTimeString("th-TH", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                }),
-                treatmentEndTime: availableDateEnd.toLocaleTimeString("th-TH", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                }),
+                // treatmentStartTime: availableDateStart.toLocaleTimeString("th-TH", {
+                //     hour: "2-digit",
+                //     minute: "2-digit",
+                // }),
+                // treatmentEndTime: availableDateEnd.toLocaleTimeString("th-TH", {
+                //     hour: "2-digit",
+                //     minute: "2-digit",
+                // }),
+                treatmentStartTime: `${availableDateStart.getHours().toString().padStart(2, '0')}:${availableDateStart.getMinutes().toString().padStart(2, '0')}`,  
+                treatmentEndTime: `${availableDateEnd.getHours().toString().padStart(2, '0')}:${availableDateEnd.getMinutes().toString().padStart(2, '0')}`,      
                 };
         });
         return new Response(JSON.stringify(res), { status: 200 });
