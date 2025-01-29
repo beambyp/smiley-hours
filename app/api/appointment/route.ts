@@ -7,6 +7,10 @@ export async function POST(request: Request) {
     try{
     let appointmentRecord;
     const {userEmail,psychologistEmail,role,appointmentDate,symptom} = await request.json();
+    if (!userEmail || !psychologistEmail || !role || !appointmentDate || !symptom) {
+        return new Response(JSON.stringify({ error: "Missing required fields." }), { status: 400 });
+    }
+    console.log(userEmail,psychologistEmail,role,appointmentDate,symptom);
     if(role == "User"){ //User
         const user = await prisma.userInfo.findUnique({
             where: { email: userEmail },
