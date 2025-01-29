@@ -14,14 +14,16 @@ export async function POST(request: Request) {
         if (!user) {
             throw new Error("User not found");
         }
-        const now = new Date().toISOString();
-        const appointmentDateISO = new Date(appointmentDate).toISOString();
+        const now = new Date();
+        const nowISO = now.toISOString();
+        const appointmentDateObj = new Date(appointmentDate);
+        const appointmentDateISO = appointmentDateObj.toISOString();
         const consentForm = await prisma.consentFormRecord.create({
             data: {
                 userEmail,
                 name: user.name,
                 surname: user.surname,
-                dateSigned: now,
+                dateSigned: nowISO,
             },
         });
         appointmentRecord = await prisma.appointmentRecord.create({
@@ -45,8 +47,10 @@ export async function POST(request: Request) {
         if (!user) {
             throw new Error("Psychologist not found");
         }
-        const now = new Date().toISOString();
-        const appointmentDateISO = new Date(appointmentDate).toISOString();
+        const now = new Date();
+        const nowISO = now.toISOString();
+        const appointmentDateObj = new Date(appointmentDate);
+        const appointmentDateISO = appointmentDateObj.toISOString();
         appointmentRecord = await prisma.appointmentRecord.create({
             data:{
                 userEmail,
@@ -57,7 +61,7 @@ export async function POST(request: Request) {
                 isCancel: false,
                 isSuccess: false,
                 isDiagnosis: false,
-                createDate: now,
+                createDate: nowISO,
             }
         })
     }

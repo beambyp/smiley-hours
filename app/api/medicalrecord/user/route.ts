@@ -46,7 +46,8 @@ export async function GET(request: Request) {
                 // }),
                 treatmentStartTime: `${availableDateStart.getHours().toString().padStart(2, '0')}:${availableDateStart.getMinutes().toString().padStart(2, '0')}`,  
                 treatmentEndTime: `${availableDateEnd.getHours().toString().padStart(2, '0')}:${availableDateEnd.getMinutes().toString().padStart(2, '0')}`,      
-                };
+                appointmentDate: x.treatmentDate,
+            };
         });
         return new Response(JSON.stringify(res), { status: 200 });
 
