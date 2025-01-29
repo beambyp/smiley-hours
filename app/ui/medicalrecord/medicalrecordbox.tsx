@@ -14,7 +14,7 @@ type MedicalData = {
     appointmentDate: DateTime,
 };
 
-const MedicalRecordBox: React.FC<MedicalData> = ({ Name, symptom, diagnosis, advice, treatmentDate, treatmentStartTime, treatmentEndTime,appointmentDate}) => {
+const MedicalRecordBox: React.FC<MedicalData> = ({ Name, symptom, diagnosis, advice,appointmentDate}) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const formattedDate = dayjs(appointmentDate).format("D MMMM YYYY");
     const formattedStartTime = dayjs(appointmentDate).format("HH.mm");
