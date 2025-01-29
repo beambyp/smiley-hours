@@ -23,27 +23,12 @@ export async function GET(request: Request) {
         });
         
         const res = record.map((x) => {
-            const availableDateStart = new Date(x.treatmentDate);
-            const availableDateEnd = new Date(x.treatmentDate); 
-            availableDateEnd.setHours(availableDateEnd.getHours() + 1);
             return {
                 Name: x.userInfo.name + " " + x.userInfo.surname,
                 symptom: x.symptom,
                 diagnosis: x.diagnosis,
                 advice: x.advice,
-                treatmentDate: availableDateStart.toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                }), 
-                treatmentStartTime: availableDateStart.toLocaleTimeString("th-TH", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                }),
-                treatmentEndTime: availableDateEnd.toLocaleTimeString("th-TH", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                }),
+                appointmentDate: x.treatmentDate,
                 };
         });
         return new Response(JSON.stringify(res), { status: 200 });

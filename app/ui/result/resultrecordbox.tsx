@@ -1,18 +1,20 @@
 import { useState } from "react";
 import ResultModal from "./resultmodal";
+import { DateTime } from "next-auth/providers/kakao";
+import dayjs from "dayjs";
 
 type MedicalData = {
     AppointmentID: number,
     Name: string,
     symptom: string,
-    treatmentDate: string,
-    treatmentStartTime: string,
-    treatmentEndTime: string,
+    appointmentDate: DateTime,
 };
 
-const ResultRecordBox: React.FC<MedicalData> = ({ AppointmentID,Name, symptom,treatmentDate, treatmentStartTime, treatmentEndTime }) => {
+const ResultRecordBox: React.FC<MedicalData> = ({ AppointmentID,Name, symptom,appointmentDate}) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
-
+    const formattedDate = dayjs(appointmentDate).format("D MMMM YYYY");
+    const formattedStartTime = dayjs(appointmentDate).format("HH.mm");
+    const formattedEndTime = dayjs(appointmentDate).add(1, "hour").format("HH.mm");
     const onClickDetail = () => {
         setModalOpen(true)
     }
@@ -23,8 +25,8 @@ const ResultRecordBox: React.FC<MedicalData> = ({ AppointmentID,Name, symptom,tr
     return (
         <div className="flex justify-around bg-[#9acafc] p-4 rounded-lg shadow-md mb-4 h-14">
             <div className="text-white font-anuphan w-1/4">{Name}</div>
-            <div className="text-white font-anuphan">{treatmentDate}</div>
-            <div className="text-white font-anuphan">{treatmentStartTime} - {treatmentEndTime}</div>
+            <div className="text-white font-anuphan">{formattedDate}</div>
+            <div className="text-white font-anuphan">{formattedStartTime} - {formattedEndTime}</div>
             <div>
                 <button
                     onClick={onClickDetail}>
@@ -38,9 +40,9 @@ const ResultRecordBox: React.FC<MedicalData> = ({ AppointmentID,Name, symptom,tr
                 AppointmentID={AppointmentID}
                 Name={Name}
                 symptom={symptom}
-                treatmentDate={treatmentDate}
-                treatmentStartTime={treatmentStartTime}
-                treatmentEndTime={treatmentEndTime}
+                treatmentDate={formattedDate}
+                treatmentStartTime={formattedStartTime}
+                treatmentEndTime={formattedEndTime}
             />
         </div>
     );

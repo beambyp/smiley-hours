@@ -7,14 +7,13 @@ import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from "react";
 import ResultRecordBox from "../ui/result/resultrecordbox";
+import { DateTime } from "next-auth/providers/kakao";
 
 type RecordData = {
     AppointmentID: number,
     Name: string,
     symptom: string,
-    treatmentDate: string,
-    treatmentStartTime: string,
-    treatmentEndTime: string,
+    appointmentDate: DateTime,
 };
 
 export default function Page() {
@@ -53,9 +52,7 @@ export default function Page() {
                         AppointmentID: record.AppointmentID,
                         Name: record.Name,
                         symptom: record.symptom,
-                        treatmentDate: record.treatmentDate,
-                        treatmentStartTime: record.treatmentStartTime,
-                        treatmentEndTime: record.treatmentEndTime
+                        appointmentDate: record.appointmentDate,
                     }));
                     setRecordData(mappedData);
                 }
@@ -87,9 +84,7 @@ export default function Page() {
                                 AppointmentID={data.AppointmentID}
                                 Name={data.Name}
                                 symptom={data.symptom}
-                                treatmentDate={data.treatmentDate}
-                                treatmentStartTime={data.treatmentStartTime}
-                                treatmentEndTime={data.treatmentEndTime}
+                                appointmentDate={data.appointmentDate}
                             />
                         ))}
                     </div>

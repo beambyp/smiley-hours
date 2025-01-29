@@ -30,27 +30,12 @@ export async function GET(request: Request) {
         });
 
         const res = appointment.map((x) => {
-            const availableDateStart = new Date(x.appointmentDate);
-            const availableDateEnd = new Date(x.appointmentDate); 
-            availableDateEnd.setHours(availableDateEnd.getHours() + 1);
             return {
                 AppointmentID: x.appointmentID,
                 UserEmail: x.userInfo.email,
                 Name: x.userInfo.name + " " + x.userInfo.surname,
                 symptom: x.symptom,
-                treatmentDate: availableDateStart.toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                }), 
-                treatmentStartTime: availableDateStart.toLocaleTimeString("th-TH", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                }),
-                treatmentEndTime: availableDateEnd.toLocaleTimeString("th-TH", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                }),
+                appointmentDate: x.appointmentDate,
                 };
         });
         return new Response(JSON.stringify(res), { status: 200 });

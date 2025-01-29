@@ -14,9 +14,6 @@ type MedicalData = {
   symptom: string,
   diagnosis: string,
   advice: string,
-  treatmentDate: string,
-  treatmentStartTime: string,
-  treatmentEndTime: string,
   appointmentDate: DateTime,
 };
 
@@ -127,9 +124,6 @@ export default function Page() {
               symptom={data.symptom}
               diagnosis={data.diagnosis}
               advice={data.advice}
-              treatmentDate={data.treatmentDate}
-              treatmentStartTime={data.treatmentStartTime}
-              treatmentEndTime={data.treatmentEndTime}
               appointmentDate={data.appointmentDate}
             />
           ))}

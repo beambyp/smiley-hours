@@ -23,29 +23,11 @@ export async function GET(request: Request) {
         });
         
         const res = record.map((x) => {
-            const availableDateStart = new Date(x.treatmentDate);
-            const availableDateEnd = new Date(x.treatmentDate); 
-            availableDateEnd.setHours(availableDateEnd.getHours() + 1);
             return {
                 Name: x.psychologistInfo.name + " " + x.psychologistInfo.surname,
                 symptom: x.symptom,
                 diagnosis: x.diagnosis,
-                advice: x.advice,
-                treatmentDate: availableDateStart.toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                }), 
-                // treatmentStartTime: availableDateStart.toLocaleTimeString("th-TH", {
-                //     hour: "2-digit",
-                //     minute: "2-digit",
-                // }),
-                // treatmentEndTime: availableDateEnd.toLocaleTimeString("th-TH", {
-                //     hour: "2-digit",
-                //     minute: "2-digit",
-                // }),
-                treatmentStartTime: `${availableDateStart.getHours().toString().padStart(2, '0')}:${availableDateStart.getMinutes().toString().padStart(2, '0')}`,  
-                treatmentEndTime: `${availableDateEnd.getHours().toString().padStart(2, '0')}:${availableDateEnd.getMinutes().toString().padStart(2, '0')}`,      
+                advice: x.advice,   
                 appointmentDate: x.treatmentDate,
             };
         });

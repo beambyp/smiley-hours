@@ -8,9 +8,6 @@ type MedicalData = {
     symptom: string,
     diagnosis: string,
     advice: string,
-    treatmentDate: string,
-    treatmentStartTime: string,
-    treatmentEndTime: string,
     appointmentDate: DateTime,
 };
 
