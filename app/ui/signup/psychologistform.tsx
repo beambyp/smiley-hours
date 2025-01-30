@@ -71,7 +71,7 @@ export default function PsychologistForm() {
           },
         });
         console.log("Uploaded file is available at:", blob.url);
-        psychologistPhoto = blob.url; 
+        psychologistPhoto = blob.url;
         console.log("psychologistPhoto:", psychologistPhoto);
       } catch (error) {
         if (error instanceof Error) {
@@ -79,7 +79,7 @@ export default function PsychologistForm() {
         } else {
           throw error;
         }
-        return; 
+        return;
       }
     }
 
@@ -105,7 +105,7 @@ export default function PsychologistForm() {
           isSpecializeElder,
           email,
           password,
-          psychologistPhoto, 
+          psychologistPhoto,
         }),
       });
 
@@ -122,7 +122,7 @@ export default function PsychologistForm() {
 
   return (
     <div className="flex p-2 flex-col gap-2 ">
-      <h2 className="font-akshar text-2xl md:text-3xl text-[#2B6EB0] mt-32 md:mb-2">Create Account</h2>
+      <h2 className="font-akshar text-2xl md:text-3xl text-[#2B6EB0] mt-48 md:mb-2">Create Account</h2>
       <p className="font-anuphan text-xl text-[#2B6EB0] mb-4">ผู้ให้คำปรึกษา</p>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="md:col-span-2 flex items-center gap-4">
@@ -353,8 +353,11 @@ export default function PsychologistForm() {
             required
           />
         </div>
-
         <div className="md:col-span-2">
+        <p className="font-anuphan text-sm text-[#2B6EB0] mb-4">
+          Smiley Hours ให้ความสำคัญสูงสุดกับความปลอดภัยของข้อมูลผู้ใช้งาน <br />
+          และรับประกันว่าข้อมูลของท่านจะถูกเก็บเป็นความลับ ไม่ถูกเปิดเผยแก่บุคคลภายนอก
+        </p>
           <button
             type="submit"
             className="w-full bg-[#2B6EB0] text-white py-2 rounded hover:bg-blue-800"

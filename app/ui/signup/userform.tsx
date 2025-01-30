@@ -23,9 +23,9 @@ export default function UserForm() {
     } else if (confirmPassword !== password) {
       setError("Password and Confirm Password do not match.");
       console.log(error);
-      return 
+      return
     } else {
-      setError(""); 
+      setError("");
       console.log("Passwords are valid and match.");
     }
 
@@ -162,6 +162,10 @@ export default function UserForm() {
             />
           </div>
         </div>
+        <p className="font-anuphan text-sm text-[#2B6EB0]">
+          Smiley Hours ให้ความสำคัญสูงสุดกับความปลอดภัยของข้อมูลผู้ใช้งาน <br />
+          และรับประกันว่าข้อมูลของท่านจะถูกเก็บเป็นความลับ ไม่ถูกเปิดเผยแก่บุคคลภายนอก
+        </p>
         <button
           type="submit"
           className="font-akshar mt-4 w-full bg-[#2B6EB0] text-white font-semibold py-2 rounded-md hover:bg-gray-400 transition"
