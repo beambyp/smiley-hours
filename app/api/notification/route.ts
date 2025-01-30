@@ -19,6 +19,7 @@ export async function POST(request: Request) {
                         gte: new Date(now.getTime() - 60 * 60 * 1000), // 1 hour before now
                         lt: new Date(now.getTime() + 60 * 60 * 1000), // 1 hour after now
                     },
+                    isCancel: false,
                 },
                 include: {
                     psychologistInfo: true
@@ -39,6 +40,7 @@ export async function POST(request: Request) {
                         gte: new Date(now.getTime() - 60 * 60 * 1000), // 1 hour before now
                         lt: new Date(now.getTime() + 60 * 60 * 1000), // 1 hour after now
                     },
+                    isCancel: false,
                 },
                 include: {
                     userInfo: true

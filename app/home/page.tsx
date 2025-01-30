@@ -132,6 +132,18 @@ export default function Page() {
         }
     }
 
+    const VideoPlayer = ({ role }: { role: string }) => {
+        const videoSrc = role === "User" || role === ""
+            ? "/home/User_demo.mp4"   
+            : "/home/Psychologist_demo.mp4";    
+        return (
+            <video width="560" height="315" controls className="rounded-lg shadow-lg">
+                <source src={videoSrc} type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+        );
+    };
+
     return (
         <div>
             <TopHeader />
@@ -163,21 +175,30 @@ export default function Page() {
                     style={{ backgroundImage: "url('/home/BgHome.png')" }}
                 >
                     <div className="container mx-auto px-6">
-                        {/* Text Content */}
-                        <div className="flex flex-col max-w-2xl">
-                            <h1 className="font-akshar text-5xl font-bold text-[#2A5A8C] pl-10 leading-relaxed">
-                                Smiley Hours
-                            </h1>
-                            <h2 className="font-anuphan text-6xl font-semibold text-[#2A5A8C] pl-80 leading-relaxed">
-                                ใช้งานยังไง?
-                            </h2>
-                            <p className="font-anuphan text-2xl font-light text-[#2A5A8C] pl-11 leading-relaxed">
-                                ใช้งานง่าย ตอบโจทย์ทุกการนัดหมาย
-                            </p>
-                            <p className="font-anuphan text-[#2A5A8C] mb-8 space-x-4">
-                                <span className="text-2xl font-bold">ให้การนัดเป็นเรื่องง่าย </span>
-                                <span className="text-3xl font-black leading-[4]">เพียงปลายนิ้วสัมผัส</span>
-                            </p>
+                        {/* Main Flex Container */}
+                        <div className="flex flex-col lg:flex-row items-center justify-between max-w-6xl mx-auto gap-8">
+
+                            {/* Text Content */}
+                            <div className="flex flex-col items-start lg:items-start space-y-6">
+                                <h1 className="font-akshar text-5xl font-bold text-[#2A5A8C] pl-10 leading-relaxed">
+                                    Smiley Hours
+                                </h1>
+                                <h2 className="font-anuphan text-6xl font-semibold text-[#2A5A8C] pl-40 leading-relaxed">
+                                    ใช้งานยังไง?
+                                </h2>
+                                <p className="font-anuphan text-2xl font-light text-[#2A5A8C] pl-11 leading-relaxed">
+                                    ใช้งานง่าย ตอบโจทย์ทุกการนัดหมาย
+                                </p>
+                                <p className="font-anuphan text-[#2A5A8C] mb-8 space-x-4">
+                                    <span className="text-2xl font-bold">ให้การนัดเป็นเรื่องง่าย </span>
+                                    <span className="text-3xl font-black leading-[4]">เพียงปลายนิ้วสัมผัส</span>
+                                </p>
+                            </div>
+
+                            {/* Video Section (Pushed Right) */}
+                            <div className="flex justify-end items-center w-full lg:w-auto pl-16 pb-8">
+                                <VideoPlayer role={role || ""} />
+                            </div>
                         </div>
                     </div>
                 </div>
