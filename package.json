@@ -19,6 +19,7 @@
     "bcrypt": "^5.1.1",
     "convex": "^1.17.4",
     "dayjs": "^1.11.13",
+    "dayjs-plugin-utc": "^0.1.2",
     "jsonwebtoken": "^9.0.2",
     "next": "15.1.1-canary.24",
     "next-auth": "4.24.10",

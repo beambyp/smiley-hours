@@ -20,8 +20,9 @@ export async function POST(request: Request) {
         }
         const now = new Date();
         const nowISO = now.toISOString();
-        const appointmentDateObj = new Date(appointmentDate);
-        const appointmentDateISO = appointmentDateObj.toISOString();
+        //const appointmentDates = new Date(appointmentDate);
+        //const appointmentDateISO = appointmentDates.toISOString();
+        console.log(user);
         const consentForm = await prisma.consentFormRecord.create({
             data: {
                 userEmail,
@@ -30,21 +31,21 @@ export async function POST(request: Request) {
                 dateSigned: nowISO,
             },
         });
-
         if (!consentForm) {
             throw new Error("Failed to create consent form");
         }
+        console.log(consentForm);
         appointmentRecord = await prisma.appointmentRecord.create({
             data:{
                 userEmail,
                 psychologistEmail,
-                appointmentDate: appointmentDateISO,
+                appointmentDate: appointmentDate,
                 consentFormID: consentForm.consentFormID,
                 symptom,
                 isCancel: false,
                 isSuccess: true,
                 isDiagnosis: false,
-                createDate: now,
+                createDate: nowISO,
             }
         })
     }
@@ -57,13 +58,13 @@ export async function POST(request: Request) {
         }
         const now = new Date();
         const nowISO = now.toISOString();
-        const appointmentDateObj = new Date(appointmentDate);
-        const appointmentDateISO = appointmentDateObj.toISOString();
+        //const appointmentDateObj = new Date(appointmentDate);
+        //const appointmentDateISO = appointmentDateObj.toISOString();
         appointmentRecord = await prisma.appointmentRecord.create({
             data:{
                 userEmail,
                 psychologistEmail,
-                appointmentDate: appointmentDateISO,
+                appointmentDate: appointmentDate,
                 consentFormID: null,
                 symptom: symptom,
                 isCancel: false,

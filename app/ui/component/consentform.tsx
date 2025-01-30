@@ -4,6 +4,7 @@ import "dayjs/locale/th"; // Import ภาษาไทย
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import utc from 'dayjs/plugin/utc';
 
 interface AppointmentData {
   appointmentId: number;
@@ -167,9 +168,17 @@ const Consentform: React.FC = () => {
     }
   };
 
+  //var utc = require('dayjs/plugin/utc');
+  dayjs.extend(utc);
   const handleSubmit = async () => {
     let response;
-    const appointmentDate = dayjs(`${formData.date}T${formData.time}`).format("YYYY-MM-DDTHH:mm:ss");
+    //const appointmentDate = dayjs(`${formData.date}T${formData.time}`).format("YYYY-MM-DDTHH:mm:ss");
+    //const appointmentDate = dayjs.utc(`${formData.date}T${formData.time}`).format("YYYY-MM-DDTHH:mm:ss");
+    const appointmentDate = dayjs
+    .utc(`${formData.date}T${formData.time}`)
+    .subtract(7, "hour")
+    .format("YYYY-MM-DDTHH:mm:ssZ");
+    console.log(appointmentDate);
     try {
       if (appointmentData) {
         response = await fetch('/api/consentform', {
