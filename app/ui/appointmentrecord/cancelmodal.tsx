@@ -13,7 +13,7 @@ const CancelModal: React.FC<CanelModalProps> = ({ isOpen, onClose, appointmentId
 
     const handleDelete = async () => {
         try {
-            const res = await fetch("/api/appointmentrecord",{
+            const res = await fetch("/api/appointmentrecord/user",{
               method: "POST",
               headers: {
                 "Content-Type": "application/json"

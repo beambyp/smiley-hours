@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import dayjs from "dayjs";
+import utc from 'dayjs/plugin/utc';
 
 const CreateForm: React.FC = () => {
+    dayjs.extend(utc);
     const { data: session } = useSession();
     const user = session?.user.email;
     const [userEmail, setUserEmail] = useState<string[]>([]);
@@ -47,6 +50,10 @@ const CreateForm: React.FC = () => {
     console.log(selectedEmail)
     console.log(selectedTime)
     const handleSubmit = async () => {
+        const appointmentDate = dayjs
+            .utc(`${selectedDate}T${selectedTime}`)
+            .subtract(7, "hour")
+            .format("YYYY-MM-DDTHH:mm:ssZ");
         try {
             const response = await fetch('/api/appointment/', {
                 method: 'POST',
@@ -57,7 +64,7 @@ const CreateForm: React.FC = () => {
                     userEmail: selectedEmail,
                     psychologistEmail: user,
                     role: "Psychologist",
-                    appointmentDate: `${selectedDate}T${selectedTime.padStart(5, '0')}:00Z`,
+                    appointmentDate: appointmentDate,
                     symptom: "ติดตามอาการ",
                 }),
             });

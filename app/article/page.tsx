@@ -80,7 +80,7 @@ export default function Page() {
       <Navbar menuItems={menuItems} /> 
       <ImageSlider1 />
       <main className="container bg-foreground flex justify-center items-center mx-auto py-20 shadow-2xl">
-        <div className="x">
+        <div className="grid grid-cols-3 gap-10">
           {cardData.map((card, index) => (
             <Card
               key={index}
