@@ -1,2 +1,2 @@
-Computer Enginneering Senior Project 2024
-By Chalisa Sakulwichitsinthu, Pariyakorn Kammarangkura 
+Computer enginneering senior project 2024 about Psychologist consultation system
+By Chalisa Sakulwichitsinthu, Pariyakorn Kammarangkura from Computer engineering student at Kasetsart University
